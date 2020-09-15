@@ -112,6 +112,7 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",
+    "antd": "^4.6.4",
     "axios": "^0.20.0",
     "codemirror": "^5.57.0",
     "core-js": "^3.6.5",

@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import Root from './root'
+import 'antd/dist/antd.css';
 import '@/global/reset.less'
 import configureStore from './configureStore'
 
