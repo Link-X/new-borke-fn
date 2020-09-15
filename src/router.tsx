@@ -1,13 +1,13 @@
-import Home from '@/pages/home/'
+import Index from '@/pages/index'
 
 const routes = [
     {
-        component: Home,
+        component: Index,
         routes: [
             {
                 path: '/a',
                 exact: true,
-                component: Home
+                component: Index
             }
         ]
     }

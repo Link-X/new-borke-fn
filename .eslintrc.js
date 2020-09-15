@@ -33,6 +33,7 @@ module.exports = {
         '@typescript-eslint/require-await': 'warn',
         '@typescript-eslint/no-floating-promises': ['warn'],
         '@typescript-eslint/no-empty-function': ['warn'],
+        '@typescript-eslint/explicit-function-return-type': 0,
         '@typescript-eslint/strict-boolean-expressions': [
             'warn',
             {
