@@ -33,6 +33,7 @@ const Index = (props: Iprops): JSX.Element => {
                     }))
             )
         })
+
         if (!isRouteNull && e.pathname !== '/') {
             replacePage('/404')
             return true
