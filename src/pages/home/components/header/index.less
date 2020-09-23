@@ -1,0 +1,134 @@
+.xdb-home_header {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 20px 0px;
+    width: 100%;
+    margin-top: 0px;
+    transition: all 0.3s ease-out 0s;
+    background-color: rgba(255, 255, 255, 0);
+    position: fixed;
+    z-index: 100;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    transition: 0.3s all ease-in-out;
+    height: 96px;
+    .xdb_home_header_and {
+        padding: 7px 0px;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 10px -2px;
+    }
+
+    .home-header_concent {
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: 15px;
+        padding-left: 80px;
+        width: 100%;
+        margin: 0 16px;
+        display: flex;
+        position: relative;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header-nav-collapse {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        transition: opacity 0.3s ease-in-out 0s;
+    }
+    .header-nav-collapse-active {
+        opacity: 0;
+    }
+    .nav-collapse_ul {
+        display: flex;
+        flex-direction: row;
+        -webkit-box-orient: horizontal;
+        margin-left: auto !important;
+        padding-left: 0;
+        margin-bottom: 0;
+        cursor: pointer;
+        position: relative;
+
+        li {
+            position: relative;
+            cursor: pointer;
+            padding: 15px;
+            overflow: hidden;
+            font-size: 16px;
+            border-radius: 30%;
+        }
+        a {
+            color: #333;
+        }
+        .active {
+            color: #007fff;
+        }
+    }
+    .nab-collapse_top2 {
+        li {
+            a {
+                color: #fff;
+            }
+        }
+    }
+    .home-header_login {
+        font-size: 19px;
+        font-weight: bold;
+        color: #007fff;
+        cursor: pointer;
+    }
+    .navBtn {
+        position: relative;
+        z-index: 1;
+        cursor: 'pointer';
+        font-size: 0;
+        margin-left: '3px';
+    }
+    .toggle-btn {
+        background-color: transparent;
+        border: 0 none;
+        padding: 0;
+        outline: none;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+        .icon-bar {
+            background-color: #333;
+            display: block;
+            height: 2px;
+            margin-bottom: 5px;
+            width: 25px;
+            position: relative;
+            transition: all 0.3s ease-in-out 0s;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        &.active {
+            .icon-bar {
+                &:nth-child(1) {
+                    top: 9px;
+                    transform: rotate(45deg);
+                }
+                &:nth-child(2) {
+                    opacity: 0;
+                    visibility: hidden;
+                }
+                &:nth-child(3) {
+                    top: -5px;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+    }
+    .toggle-btn2 {
+        .icon-bar {
+            background-color: #fff;
+        }
+    }
+}

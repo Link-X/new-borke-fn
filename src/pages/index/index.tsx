@@ -58,6 +58,16 @@ const Index = (props: Iprops): JSX.Element => {
         next()
     }
 
+    const isBase: eachFunc = async (e, next) => {
+        if (e.pathname === '/') {
+            props.history.replace({
+                pathname: '/home'
+            })
+            return
+        }
+        next()
+    }
+
     const tickCheck = (arr: any[], e: Location<{}>) => {
         const fn = compose(arr)
         fn(e, () => {
@@ -66,7 +76,7 @@ const Index = (props: Iprops): JSX.Element => {
     }
 
     const routeEach = (): void => {
-        const checkFunc = [is404, isLogin, noGoLogin]
+        const checkFunc = [isBase, is404, isLogin, noGoLogin]
         props.history.listen((e: Location<{}>): void => {
             tickCheck(checkFunc, e)
         })
@@ -74,7 +84,6 @@ const Index = (props: Iprops): JSX.Element => {
     }
 
     useEffect(() => {
-        console.log(props)
         routeEach()
     }, [])
     return <div className="index">{renderRoutes(props.route.routes)}</div>
