@@ -1,35 +1,31 @@
 import axios, { AxiosRequestConfig } from 'axios'
-import qs from 'qs'
 
 import iToast from 'iu-toast'
 import { postHttpType, getHttpType } from '@/typescript'
 
 const apiUrl: any = {
-    development: '/',
-    test: '/',
-    production: '/'
+    development: '/api',
+    test: '/api',
+    production: '/api'
 }
 
 const Http = axios.create({
     baseURL: apiUrl[process.env.NODE_ENV],
-    withCredentials: true
+    withCredentials: true,
+    headers: {
+        'content-type': 'application/json'
+    }
 })
 
 const getToken = (): string => {
     // token = 9d4264f1afb9414f867b30fd2a48478a
-    const token = localStorage.getItem('_token')
+    const token = localStorage.getItem('token')
     return token
-}
-
-const getOrgId = (): number => {
-    const orgList = JSON.parse(localStorage.getItem('organizations') || '[]')
-    const activedList = orgList.find((v: any) => v.actived) || orgList[0] || {}
-    return activedList.id
 }
 
 const httpError = {
     403: () => {
-        iToast.fail('您暂无权限查看大屏数据')
+        iToast.fail('暂无权限')
         setTimeout(() => {
             const pathname = window.location.pathname
             if (pathname !== '/login') {
@@ -39,7 +35,8 @@ const httpError = {
         }, 1500)
     },
     notNumber(data: any) {
-        iToast.fail(data?.msg || data?.errMsg || '请求错误')
+        console.log(data)
+        iToast.fail(data?.message || data?.errMsg || '请求错误')
     },
     init(code: string, data: any) {
         const func = this[code] ? this[code] : this.notNumber
@@ -77,19 +74,17 @@ Http.interceptors.response.use(
     },
     async (error): Promise<any> => {
         return Promise.reject(error).catch((): any => {
-            iToast.fail(error?.msg || error?.errMsg || '请求错误')
+            iToast.fail(error?.message || error?.errMsg || '请求错误')
             throw new Error(error)
             // return []
         })
     }
 )
 function addParams(params: any): void {
-    params.orgId = params.orgId ? params.orgId : getOrgId()
     return params
 }
 
 function addData(data: any): void {
-    data.orgId = data.orgId ? data.orgId : getOrgId()
     return data
 }
 
@@ -114,28 +109,7 @@ export const post: postHttpType = async (
     }
 ) => {
     data = addData({ ...data })
-    return Http.post(path, qs.stringify(data), options)
-}
-
-export const jsonPost: postHttpType = async (
-    path: string,
-    data: any,
-    options: any = {
-        params: {}
-    }
-) => {
-    data = addData({ ...data })
-    return Http.post(path, data, {
-        ...options,
-        ...{
-            headers: {
-                ...{
-                    'content-type': 'application/json'
-                },
-                ...options.headers
-            }
-        }
-    })
+    return Http.post(path, data, options)
 }
 
 export default Http

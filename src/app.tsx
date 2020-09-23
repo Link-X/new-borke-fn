@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Root from './root'
 import 'antd/dist/antd.css'
 import '@/global/reset.less'
+import 'iu-toast/dist/iu-toast.min.css'
 import configureStore from './configureStore'
 
 const store = configureStore()

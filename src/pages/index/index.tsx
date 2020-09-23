@@ -26,8 +26,7 @@ const Index = (props: Iprops): JSX.Element => {
         const isRouteNull = routes.some((v) => {
             return (
                 v.path === e.pathname ||
-                (v.routes &&
-                    v.routes.length &&
+                (v.routes?.length &&
                     v.routes.some((j) => {
                         return j.path === e.pathname
                     }))
@@ -42,7 +41,7 @@ const Index = (props: Iprops): JSX.Element => {
     }
 
     const isLogin: eachFunc = async (e, next) => {
-        const token = localStorage.getItem('_token')
+        const token = localStorage.getItem('token')
         if (!token) {
             replacePage('/login')
             return
@@ -51,7 +50,7 @@ const Index = (props: Iprops): JSX.Element => {
     }
 
     const noGoLogin: eachFunc = async (e, next) => {
-        const token = localStorage.getItem('_token')
+        const token = localStorage.getItem('token')
         if (e.pathname === '/login' && token) {
             replacePage('/home')
             return

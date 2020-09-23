@@ -34,6 +34,7 @@ module.exports = {
         '@typescript-eslint/no-floating-promises': ['warn'],
         '@typescript-eslint/no-empty-function': ['warn'],
         '@typescript-eslint/explicit-function-return-type': 0,
+        '@typescript-eslint/prefer-function-type': 0,
         '@typescript-eslint/strict-boolean-expressions': [
             'warn',
             {
