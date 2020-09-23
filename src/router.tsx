@@ -1,3 +1,5 @@
+import produce from 'immer'
+
 const files = require.context('./pages', true, /loadable\.tsx$/)
 
 interface pathModuleType {
@@ -5,25 +7,11 @@ interface pathModuleType {
     component: any
     routes?: pathModuleType[]
 }
-const filesArr = files.keys()
-
-const sortArr = (): string[] => {
-    const left: string[] = []
-    const right: string[] = []
-    filesArr.forEach((v) => {
-        if (v.includes('childrens')) {
-            right.push(v)
-        } else {
-            left.push(v)
-        }
-    })
-    return [...left, ...right]
-}
+const filesArr = files.keys().sort((a, b) => a.indexOf('childrens') - b.indexOf('childrens'))
 
 const getRouters = () => {
-    const pathModule: pathModuleType[] = []
-    const list = sortArr()
-    list.forEach((key) => {
+    let pathModule: pathModuleType[] = []
+    filesArr.forEach((key) => {
         const pathArr = key.split('/')
         const path = `/${pathArr[1]}`
         if (path === '/index') {
@@ -35,14 +23,18 @@ const getRouters = () => {
                 path: `/${pathArr[1]}/${pathArr[3]}`,
                 component: files(key).default
             }
-            pathModule[currentIndex].routes.push(childrenRoute)
+            pathModule = produce(pathModule, draft => {
+                draft[currentIndex].routes.push(childrenRoute)
+            })
             return
         }
-        pathModule.push({
-            path,
-            component: files(key).default,
-            routes: []
-        })
+        pathModule = produce(pathModule, draft => {
+            draft.push({
+                path,
+                component: files(key).default,
+                routes: []
+            })
+        }) 
     })
     return [
         {
