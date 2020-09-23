@@ -13,7 +13,7 @@ type eachFunc = (e: Location<{}>, next: Function) => Promise<any>
 
 const Index = (props: Iprops): JSX.Element => {
     const replacePage = (pathname: string) => {
-        if (props.location.pathname === pathname) {
+        if (props.history.location.pathname === pathname) {
             return
         }
         props.history.replace({

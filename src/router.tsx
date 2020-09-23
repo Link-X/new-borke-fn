@@ -1,7 +1,7 @@
 const files = require.context('./pages', true, /loadable\.tsx$/)
 
 interface pathModuleType {
-    path: string
+    path?: string
     component: any
     routes?: pathModuleType[]
 }
@@ -23,11 +23,12 @@ const sortArr = (): string[] => {
 const getRouters = () => {
     const pathModule: pathModuleType[] = []
     const list = sortArr()
-    console.log(list)
     list.forEach((key) => {
         const pathArr = key.split('/')
-        const path = pathArr[1] === 'index' ? '/' : `/${pathArr[1]}`
-
+        const path = `/${pathArr[1]}`
+        if (path === '/index') {
+            return
+        }
         if (key.includes('childrens')) {
             const currentIndex = pathModule.findIndex((v) => v.path.includes(pathArr[1]))
             const childrenRoute = {
@@ -43,7 +44,12 @@ const getRouters = () => {
             routes: []
         })
     })
-    return pathModule
+    return [
+        {
+            component: files('./index/loadable.tsx').default,
+            routes: pathModule
+        }
+    ]
 }
 
 const routers: pathModuleType[] = getRouters()
