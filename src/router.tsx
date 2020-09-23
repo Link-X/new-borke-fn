@@ -23,18 +23,18 @@ const getRouters = () => {
                 path: `/${pathArr[1]}/${pathArr[3]}`,
                 component: files(key).default
             }
-            pathModule = produce(pathModule, draft => {
+            pathModule = produce(pathModule, (draft) => {
                 draft[currentIndex].routes.push(childrenRoute)
             })
             return
         }
-        pathModule = produce(pathModule, draft => {
+        pathModule = produce(pathModule, (draft) => {
             draft.push({
                 path,
                 component: files(key).default,
                 routes: []
             })
-        }) 
+        })
     })
     return [
         {

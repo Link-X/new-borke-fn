@@ -5,4 +5,3 @@ const PageNull: React.FC<any> = (): JSX.Element => {
 }
 
 export default PageNull
-
