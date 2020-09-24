@@ -1,5 +1,7 @@
 import { post } from '@/utils/http'
 
+import { getCity } from '@/server/global'
+
 /** 登录 */
 export const login: loginType.loginFuncType = async (params) => {
     try {
@@ -16,23 +18,3 @@ export const login: loginType.loginFuncType = async (params) => {
     }
 }
 
-/** 获取定位信息 */
-export const getCity: loginType.getCityType = () => {
-    return new Promise((resolve, reject) => {
-        let address_detail: loginType.addressDetailsType = {} as loginType.addressDetailsType
-        window.showLocation = (data: loginType.addressType) => {
-            address_detail = data.content.address_detail
-        }
-        const script = document.createElement('script')
-        script.type = 'text/javascript'
-        script.src =
-            'https://api.map.baidu.com/location/ip?ak=BhckEOslyspzdDFOnuniCNlULdljhPxl&coor=bd09ll&callback=showLocation'
-        document.head.appendChild(script)
-        script.onload = function() {
-            resolve(address_detail)
-        }
-        script.onerror = function(e) {
-            reject(e)
-        }
-    })
-}
