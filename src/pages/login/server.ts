@@ -17,4 +17,3 @@ export const login: loginType.loginFuncType = async (params) => {
         return post<loginType.loginEnterDataType>('/user/login', params)
     }
 }
-
