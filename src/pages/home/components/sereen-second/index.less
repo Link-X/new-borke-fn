@@ -1,0 +1,123 @@
+.home-center {
+    width: 100%;
+    height: 100%;
+    background: url('http://39.108.184.64/image/426830039395680541571974907336.jpg') no-repeat center;
+    background-size: cover;
+}
+
+.xdb-home_box {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    padding: 0;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    position: relative;
+    transform: translate3d(0px, 0%, 0px);
+    transition: all 1000ms ease 0s;
+}
+
+.page1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0px;
+}
+.page2 {
+    position: absolute;
+    top: 100%;
+    left: 0px;
+}
+.home-center_box {
+    position: absolute;
+    max-width: 770px;
+    top: 25%;
+    left: 30px;
+    .center-box {
+        padding: 0 20px;
+        .ant-tabs-nav .ant-tabs-tab {
+            padding: 0;
+            width: 23px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 3px;
+            margin-right: 11px;
+        }
+        .ant-tabs-nav-wrap {
+            display: flex;
+            justify-content: center;
+        }
+        .ant-tabs-bottom .ant-tabs-bottom-bar {
+            border-top: none;
+        }
+        .ant-tabs-bottom .ant-tabs-bottom-bar .ant-tabs-ink-bar {
+            display: none!important;
+        }
+        .ant-tabs-bottom .ant-tabs-bottom-bar {
+            margin-top: -3px;
+        }
+    }
+    .center-box_title {
+        color: #fff;
+        font-size: 30px;
+        margin-bottom: 18px;
+        strong {
+            color: #007fff;
+        }
+    }
+    .center-box_article {
+        font-size: 20px;
+        color: #fff;
+        line-height: 40px;
+        min-height: 206px;
+        .box-article_tag {
+            display: flex;
+            li {
+                font-size: 17px;
+                display: inline-block;
+                line-height: 14px;
+                border-radius: 4px;
+                margin-right: 7px;
+                padding: 6px;
+                &:nth-child(1) {
+                    color: red;
+                }
+                &:nth-child(2) {
+                    color: yellow;
+                }
+                &:nth-child(3) {
+                    color: #00ff94;
+                }
+                &:nth-child(4) {
+                    color: #00fffe;
+                }
+                &:nth-child(5) {
+                    color: #ffffff;
+                }
+            }
+        }
+        .box-article_list {
+            font-size: 18px;
+            li {
+                line-height: 64px;
+                &:nth-child(2) {
+                    text-indent: 40px;
+                }
+                &:nth-child(3) {
+                    text-indent: 80px;
+                }
+            }
+        }
+    }
+}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+    background-color: #40a9ff!important;
+}
+.warther_box_text {
+    position: absolute;
+    z-index: 3;
+    letter-spacing: 6px;
+}

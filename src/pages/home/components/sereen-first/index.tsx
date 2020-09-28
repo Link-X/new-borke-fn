@@ -21,7 +21,7 @@ const wartherDoms: any = {
 const oneText = '为什么要来这？哦，我说的是这个世界!'
 const SereenFirst: React.FC<any> = (): JSX.Element => {
     const [dayType, setDayType] = useState<string>('Sunny')
-    const [str] = strShowTime<string>(oneText, 2000)
+    const [strObj] = strShowTime(oneText, 3000)
 
     const getDayType = async (): Promise<any> => {
         try {
@@ -45,6 +45,7 @@ const SereenFirst: React.FC<any> = (): JSX.Element => {
     useEffect(() => {
         getDayType()
     }, [])
+
     return (
         <div className="xdb-home_sereen1">
             <div className="xdb-home_tip">
@@ -52,7 +53,7 @@ const SereenFirst: React.FC<any> = (): JSX.Element => {
                 <div className="warther_box_text">
                     <div className="home-tip_top">美好的生命应该充满期待、惊喜和感激。</div>
                     <div className="home-tip_bottom">
-                        想想{str} <span className="tip-cursor"></span>
+                        想想{strObj.showStr} <span className={`tip-cursor ${strObj.strB}`}></span>
                     </div>
                 </div>
             </div>

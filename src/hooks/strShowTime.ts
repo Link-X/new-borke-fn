@@ -1,15 +1,31 @@
 /* eslint-disable */
 import { useState, useEffect } from 'react'
 
-const strShowTime = <T extends string>(
+interface strSHowTimeData {
+    showStr: string
+    strStatus: string
+    strB: string
+}
+
+const strShowTime = (
     str: string,
     wait: number
-): [T, React.Dispatch<React.SetStateAction<string[]>>] => {
+): [strSHowTimeData, React.Dispatch<React.SetStateAction<string[]>>] => {
     const [strArr, setStrArr] = useState<string[]>(str.split(''))
     const [showStr, setShowStr] = useState<string>('')
+    const [strStatus, setStrStatus] = useState<string>('start')
+    const [strB, setStrB] = useState<string>('')
 
-    const init = () => {
-        let time = 200
+    const strClassTran = () => {
+        let classStr = ''
+        const timeId = setInterval(() => {
+            setStrB((classStr = classStr ? '' : 'tip-opacity'))
+        }, 500)
+        return timeId
+    }
+
+    const strPerform = () => {
+        let time = 300
         let timeId: any = null
 
         /** 这里showStr 永远都是'' 我们缓存一个变量来保存它 */
@@ -17,6 +33,8 @@ const strShowTime = <T extends string>(
         return function Loop() {
             timeId && clearTimeout(timeId)
             if (!strArr.length) {
+                setStrStatus('end')
+                setStrB('tip-opacity')
                 return
             }
             timeId = setTimeout(() => {
@@ -27,14 +45,17 @@ const strShowTime = <T extends string>(
     }
 
     useEffect(() => {
+        const timeId = strClassTran()
         setTimeout(() => {
+            clearInterval(timeId)
             setShowStr('')
-            const Loop = init()
+            setStrB('')
+            const Loop = strPerform()
             Loop()
         }, wait || 0)
     }, [str])
 
-    return [showStr as T, setStrArr]
+    return [{ showStr, strStatus, strB }, setStrArr]
 }
 
 export default strShowTime

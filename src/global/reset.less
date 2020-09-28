@@ -1,9 +1,16 @@
+html {
+    font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
 html,
 body,
 div,
-span,
 object,
 iframe,
+applet,
+object,
 h1,
 h2,
 h3,
@@ -13,35 +20,13 @@ h6,
 p,
 blockquote,
 pre,
-abbr,
 address,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-samp,
-small,
-strong,
-sub,
-sup,
-var,
-b,
-i,
 dl,
 dt,
 dd,
 ol,
 ul,
 li,
-fieldset,
-form,
-label,
-legend,
 table,
 caption,
 tbody,
@@ -54,34 +39,33 @@ article,
 aside,
 canvas,
 details,
-figcaption,
+embed,
 figure,
+figcaption,
 footer,
 header,
-hgroup,
 menu,
 nav,
+output,
+ruby,
 section,
 summary,
 time,
 mark,
 audio,
-video {
+video,
+progress {
     margin: 0;
     padding: 0;
     border: 0;
-    outline: 0;
-    font-size: 100%;
     vertical-align: baseline;
-    background: transparent;
+    box-sizing: border-box;
 }
 
-body {
-    line-height: 1;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-        'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-        'Segoe UI Emoji', 'Segoe UI Symbol';
-    font-variant: tabular-nums;
+ul,
+li {
+    list-style: none;
+    box-sizing: border-box;
 }
 
 article,
@@ -91,11 +75,93 @@ figcaption,
 figure,
 footer,
 header,
-hgroup,
+main,
 menu,
 nav,
-section {
+section,
+summary {
     display: block;
+    box-sizing: border-box;
+}
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+[hidden],
+template {
+    display: none;
+}
+
+a {
+    background-color: transparent;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+dfn {
+    font-style: italic;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+img {
+    border: 0;
+}
+
+svg:not(:root) {
+    overflow: hidden;
 }
 
 figure {
@@ -119,6 +185,7 @@ samp {
     font-family: monospace, monospace;
     font-size: 1em;
 }
+
 button,
 input,
 optgroup,
@@ -148,23 +215,22 @@ input[type='submit'] {
     -webkit-appearance: button;
     cursor: pointer;
 }
-nav ul {
-    list-style: none;
-}
 
 button[disabled],
 html input[disabled] {
     cursor: default;
 }
 
-blockquote,
-q {
-    quotes: none;
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
 }
 
 input {
     line-height: normal;
 }
+
 input[type='checkbox'],
 input[type='radio'] {
     box-sizing: border-box;
@@ -182,54 +248,29 @@ input[type='search'] {
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
 }
+
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-decoration {
     -webkit-appearance: none;
 }
 
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-    content: '';
-    content: none;
+fieldset {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
 }
 
-a {
-    margin: 0;
+legend {
+    border: 0;
     padding: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    background: transparent;
 }
 
-li {
-    list-style: none;
+textarea {
+    overflow: auto;
 }
 
-/* change colours to suit your needs */
-ins {
-    background-color: #ff9;
-    color: #000;
-    text-decoration: none;
-}
-
-/* change colours to suit your needs */
-mark {
-    background-color: #ff9;
-    color: #000;
-    font-style: italic;
+optgroup {
     font-weight: bold;
-}
-
-del {
-    text-decoration: line-through;
-}
-
-abbr[title],
-dfn[title] {
-    border-bottom: 1px dotted;
-    cursor: help;
 }
 
 table {
@@ -237,21 +278,10 @@ table {
     border-spacing: 0;
 }
 
-/* change border colour to suit your needs */
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
+td,
+th {
     padding: 0;
 }
-
-input,
-select {
-    vertical-align: middle;
-}
-
 #app {
     width: 100%;
     height: 100%;
@@ -282,7 +312,6 @@ select {
     transform: scale(0);
     pointer-events: none;
 }
-
 div::-webkit-scrollbar {
     width: 9px;
     height: 1px;
