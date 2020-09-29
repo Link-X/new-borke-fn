@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 
-const ScrollPage = (ref: { current: HTMLDivElement }, max?: number) => {
+const ScrollPage = (ref: { current: HTMLDivElement }, max?: number): [number, HTMLDivElement] => {
     const [maxDom] = useState<number>(max || 2)
     const indexRef = useRef<number>(0)
+    const [index, setIndex] = useState<number>(false)
 
     const upDom = (type: string) => {
+        /** 重写触发使用组件的render */
+
         const count = type === 'up' ? -1 : 1
-        indexRef.current += count
-        ref.current.style.transform = `translate3d(0px, -${indexRef.current * 100}%,0px)`
+        const num =  indexRef.current += count
+        setIndex(num)
+        ref.current.style.transform = `translate3d(0px, -${num * 100}%,0px)`
     }
 
     const whellFunc = (ev: Event) => {
@@ -32,7 +36,7 @@ const ScrollPage = (ref: { current: HTMLDivElement }, max?: number) => {
             document.removeEventListener('DOMMouseScroll', whellFunc)
         }
     }, [])
-    return ref
+    return [index, ref.current]
 }
 
 export default ScrollPage

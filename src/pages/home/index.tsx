@@ -10,11 +10,11 @@ import './index.less'
 
 const PageNull: React.FC<any> = (): JSX.Element => {
     const ref = useRef()
-    ScrollPage(ref)
+    const [index] = ScrollPage(ref)
 
     return (
         <div className="xdb-home-center">
-            <Header />
+            <Header className={index === 1 ? 'bottom-header' : ''} />
             <div className="home-center_desk" ref={ref}>
                 <SereenFirst />
                 <SereenSecond />

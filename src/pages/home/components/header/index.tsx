@@ -13,12 +13,12 @@ const navList = [
         value: 2,
         url: '/article'
     },
-    {
-        label: '相册',
-        value: 3,
-        router: true,
-        url: '/photo-album'
-    },
+    // {
+    //     label: '相册',
+    //     value: 3,
+    //     router: true,
+    //     url: '/photo-album'
+    // },
     {
         label: '登陆',
         value: 5,
@@ -35,7 +35,7 @@ const navList = [
 
 const Header: React.FC<any> = (props: any): JSX.Element => {
     return (
-        <nav className="xdb-home_header">
+        <nav className={`xdb-home_header ${props.className}`}>
             <div className="home-header_concent">
                 <h2 className="home-header_login">xdb</h2>
                 <div className="header-nav-collapse">
