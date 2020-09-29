@@ -1,8 +1,8 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useCallback } from 'react'
 
 const loadable = (importFunc: any, options: { fallback: JSX.Element }): object => {
     const Temp = (props: object): JSX.Element => {
-        const LazyComponent = lazy(importFunc)
+        const LazyComponent = useCallback(lazy(importFunc), [])
         const { fallback } = options
         return (
             <Suspense fallback={fallback}>

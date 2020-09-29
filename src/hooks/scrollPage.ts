@@ -9,7 +9,7 @@ const ScrollPage = (ref: { current: HTMLDivElement }, max?: number): [number, HT
         /** 重写触发使用组件的render */
 
         const count = type === 'up' ? -1 : 1
-        const num =  indexRef.current += count
+        const num = (indexRef.current += count)
         setIndex(num)
         ref.current.style.transform = `translate3d(0px, -${num * 100}%,0px)`
     }

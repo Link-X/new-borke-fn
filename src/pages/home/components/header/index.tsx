@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { setBtnWater } from '@/utils/water-btn'
 
 import './index.less'
 
@@ -34,12 +35,21 @@ const navList = [
 ]
 
 const Header: React.FC<any> = (props: any): JSX.Element => {
+    const [checked, setChecked] = useState<boolean>(false)
+    const ref = useRef()
+
+    useEffect(() => {
+        setBtnWater(ref.current, {
+            type: 'agent',
+            typeNodeName: 'NAV'
+        })
+    }, [])
     return (
-        <nav className={`xdb-home_header ${props.className}`}>
+        <nav className={`xdb-home_header ${props.className}`} ref={ref}>
             <div className="home-header_concent">
                 <h2 className="home-header_login">xdb</h2>
                 <div className="header-nav-collapse">
-                    <ul className="nav-collapse_ul">
+                    <ul className="nav-collapse_ul" style={{ opacity: checked ? 0 : 1 }}>
                         {navList.map((v) => {
                             return (
                                 <li key={v.url}>
@@ -55,8 +65,13 @@ const Header: React.FC<any> = (props: any): JSX.Element => {
                         })}
                     </ul>
                 </div>
-                <div className="navBtn">
-                    <button className="toggle-btn">
+                <div
+                    className="navBtn"
+                    onClick={() => {
+                        setChecked(!checked)
+                    }}
+                >
+                    <button className={`toggle-btn ${checked ? 'active' : ''}`}>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>
                         <span className="icon-bar"></span>

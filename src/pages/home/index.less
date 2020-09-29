@@ -23,5 +23,26 @@
                 color: #fff;
             }
         }
+        .toggle-btn {
+            .icon-bar {
+                background-color: #fff;
+            }
+            &.active {
+                .icon-bar {
+                    &:nth-child(1) {
+                        top: 9px;
+                        transform: rotate(45deg);
+                    }
+                    &:nth-child(2) {
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                    &:nth-child(3) {
+                        top: -5px;
+                        transform: rotate(-45deg);
+                    }
+                }
+            }
+        }
     }
 }
