@@ -1,15 +1,17 @@
 import React, { useRef, useEffect } from 'react'
 
-import Header from './components/header/index'
+import Header from '@/common/header/index'
 import SereenFirst from './components/sereen-first/index'
 import SereenSecond from './components/sereen-second/index'
 
 import { ScrollPage } from '@/hooks/index'
 import { setBtnWater } from '@/utils/water-btn'
 
+import { propsRoute } from '@/typescript/global'
+
 import './index.less'
 
-const PageNull: React.FC<any> = (): JSX.Element => {
+const PageNull: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
     const ref = useRef()
     const [index] = ScrollPage(ref)
 
@@ -21,7 +23,7 @@ const PageNull: React.FC<any> = (): JSX.Element => {
     }, [])
     return (
         <div className="xdb-home-center">
-            <Header className={index === 1 ? 'bottom-header' : ''} />
+            <Header className={index === 1 ? 'bottom-header' : ''} router={props} />
             <div className="home-center_desk" ref={ref}>
                 <SereenFirst />
                 <SereenSecond />

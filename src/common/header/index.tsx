@@ -1,8 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { setBtnWater } from '@/utils/water-btn'
 
+import { propsRoute } from '@/typescript/global'
+
 import './index.less'
 
+interface navItmeType {
+    label: string
+    value: number
+    url: string
+}
 const navList = [
     {
         label: '首页',
@@ -34,9 +41,18 @@ const navList = [
     }
 ]
 
-const Header: React.FC<any> = (props: any): JSX.Element => {
+interface Iprops {
+    router: propsRoute
+    className: string
+}
+
+const Header: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const [checked, setChecked] = useState<boolean>(false)
     const ref = useRef()
+
+    const goPage = (v: navItmeType) => {
+        props.router.history.replace(v.url)
+    }
 
     useEffect(() => {
         setBtnWater(ref.current, {
@@ -44,6 +60,7 @@ const Header: React.FC<any> = (props: any): JSX.Element => {
             typeNodeName: 'NAV'
         })
     }, [])
+
     return (
         <nav className={`xdb-home_header ${props.className}`} ref={ref}>
             <div className="home-header_concent">
@@ -52,7 +69,7 @@ const Header: React.FC<any> = (props: any): JSX.Element => {
                     <ul className="nav-collapse_ul" style={{ opacity: checked ? 0 : 1 }}>
                         {navList.map((v) => {
                             return (
-                                <li key={v.url}>
+                                <li key={v.url} onClick={goPage.bind(this, v)}>
                                     <a
                                         onClick={(e) => {
                                             e.preventDefault()

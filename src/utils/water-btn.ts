@@ -4,7 +4,7 @@ export const setBtnWater = (el, data = {}) => {
     // const duration = data.duration || 750
     const base = {
         el: '',
-        duration: data.duration || 1500,
+        duration: data.duration || 2200,
         type: data.type || 'agent',
         typeNodeName: data.typeNodeName
     }
@@ -37,10 +37,12 @@ export const setBtnWater = (el, data = {}) => {
         const pDiv = event.target,
             cDiv = document.createElement('div')
         pDiv.appendChild(cDiv)
+        console.log(pDiv.clientWidth)
+        const scaleNum = pDiv.clientWidth > 100 ? 690 : 130
         const rectObj = forRect(pDiv),
             _height = event.pageY - rectObj.top,
             _left = event.pageX - rectObj.left,
-            _scale = 'scale(' + (pDiv.clientWidth / 530) * 10 + ')'
+            _scale = 'scale(' + (pDiv.clientWidth / scaleNum) * 10 + ')'
         const position = {
             top: _height + 'px',
             left: _left + 'px'
@@ -60,15 +62,21 @@ export const setBtnWater = (el, data = {}) => {
             top: _height + 'px',
             left: _left + 'px'
         }
+        animation = true
         setTimeout(function() {
             cDiv.setAttribute('style', forStyle(finishStyle))
             setTimeout(function() {
                 pDiv.removeChild(cDiv)
+                animation = false
             }, base.duration)
         }, 100)
     }
-
+    let animation = false
     el.addEventListener('click', function(e) {
+        console.log(false)
+        if (animation) {
+            return
+        }
         if (
             base.type === 'agent' &&
             base.typeNodeName &&
