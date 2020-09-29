@@ -21,7 +21,8 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
             page: 0,
             pageSize: 10000
         })
-        setArticleList(res.list || [])
+        const res2 = await getMajor()
+        setArticleList([...res2.major, ...res2.major2, ...res.list])
     }
 
     const getMajorFunc = async () => {
@@ -33,6 +34,10 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
         getTagsFunc()
         getArticleFunc()
         getMajorFunc()
+    }
+
+    const tagName = (id: number): string => {
+        return navList.find((v) => v.id === id).tag
     }
 
     useEffect(() => {
@@ -66,18 +71,21 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                     </div>
                     <div className="right">
                         <ul>
-                            {articleList.map((v) => {
+                            {articleList.map((v, i) => {
                                 return (
-                                    <li key={v.id}>
+                                    <li key={i}>
                                         <div className="hd img-box">
-                                            <img src={v.articleImg} alt="" />
+                                            <div
+                                                className="img-back"
+                                                style={{ backgroundImage: `url('${v.articleImg}')` }}
+                                            ></div>
                                         </div>
                                         <div className="td">
                                             <div>
                                                 <h3>{v.title}</h3>
                                             </div>
                                             <div>
-                                                <span>{v.tagId}</span>
+                                                <span>{tagName(v.tagId)}</span>
                                                 <div>
                                                     <Button type="primary" className="gray-btn">
                                                         编辑
