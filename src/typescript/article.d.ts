@@ -19,6 +19,7 @@ declare namespace articleType {
         major2: null
         title: string
         userName: string
+        hot?: boolean
     }
 
     export interface articleListDataType {

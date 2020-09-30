@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 import { Input, Button } from 'antd'
 
+import Header from '@/common/header'
+
 import { getTags, getArticle, getMajor } from './server'
+
+import { getArticleDate } from '@/utils/index'
 
 import { propsRoute } from '@/typescript/global'
 
@@ -12,25 +16,36 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
     const [navList, setNavList] = useState<articleType.tagType[]>([])
     const [articleList, setArticleList] = useState<articleType.articleItemType[]>([])
 
-    const getTagsFunc = async () => {
+    const getTagsFunc = async (): Promise<any> => {
         const res = await getTags()
         setNavList(res || [])
     }
-    const getArticleFunc = async () => {
+
+    const getArticleFunc = async (): Promise<any> => {
         const res = await getArticle({
             page: 0,
             pageSize: 10000
         })
         const res2 = await getMajor()
-        setArticleList([...res2.major, ...res2.major2, ...res.list])
+        res2.major.forEach((v) => {
+            v.hot = true
+        })
+        res2.major2.forEach((v) => {
+            v.hot = true
+        })
+        setArticleList(
+            [...res2.major, ...res2.major2, ...res.list].sort((a, b) => {
+                return Math.random() - 0.5
+            })
+        )
     }
 
-    const getMajorFunc = async () => {
+    const getMajorFunc = async (): Promise<any> => {
         const res = await getMajor()
         console.log(res.major, res.major2)
     }
 
-    const getData = async () => {
+    const getData = async (): Promise<any> => {
         getTagsFunc()
         getArticleFunc()
         getMajorFunc()
@@ -40,13 +55,18 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
         return navList.find((v) => v.id === id).tag
     }
 
+    const goDetails = (item: articleType.articleItemType) => {
+        console.log(item)
+        props.history.push(`/article/details?id=${item.id}`)
+    }
+
     useEffect(() => {
         getData()
     }, [])
 
     return (
         <div>
-            {/* <Header router={props} className="" /> */}
+            <Header className="" router={props} />
             <div className="article">
                 <section className="content">
                     <div className="left">
@@ -57,7 +77,7 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                                         <Input type="text" placeholder="搜索" />
                                     </li>
                                     <li className="active">全部</li>
-                                    <li>热门</li>
+                                    <li>星标</li>
                                 </ul>
                             </li>
                             <li className="bd">
@@ -73,24 +93,32 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                         <ul>
                             {articleList.map((v, i) => {
                                 return (
-                                    <li key={i}>
+                                    <li key={i} className={`article-item ${v.hot ? 'article-item_hot' : ''}`}>
                                         <div className="hd img-box">
                                             <div
                                                 className="img-back"
                                                 style={{ backgroundImage: `url('${v.articleImg}')` }}
-                                            ></div>
+                                            >
+                                                <div className="article-date">
+                                                    {getArticleDate(v.createDate)}
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="td">
                                             <div>
-                                                <h3>{v.title}</h3>
+                                                <h3 className="article-name">{v.title}</h3>
                                             </div>
                                             <div>
                                                 <span>{tagName(v.tagId)}</span>
                                                 <div>
-                                                    <Button type="primary" className="gray-btn">
+                                                    {/* <Button type="primary" className="gray-btn">
                                                         编辑
-                                                    </Button>
-                                                    <Button type="primary" className="white-btn">
+                                                    </Button> */}
+                                                    <Button
+                                                        onClick={goDetails.bind(this, v)}
+                                                        type="primary"
+                                                        className="white-btn"
+                                                    >
                                                         查看
                                                     </Button>
                                                 </div>

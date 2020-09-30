@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { setBtnWater } from '@/utils/water-btn'
+import React, { useState } from 'react'
 
 import { propsRoute } from '@/typescript/global'
 
@@ -48,21 +47,12 @@ interface Iprops {
 
 const Header: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const [checked, setChecked] = useState<boolean>(false)
-    const ref = useRef()
 
     const goPage = (v: navItmeType) => {
         props.router.history.replace(v.url)
     }
-
-    useEffect(() => {
-        setBtnWater(ref.current, {
-            type: 'agent',
-            typeNodeName: 'NAV'
-        })
-    }, [])
-
     return (
-        <nav className={`xdb-home_header ${props.className}`} ref={ref}>
+        <nav className={`xdb-home_header ${props.className}`}>
             <div className="home-header_concent">
                 <h2 className="home-header_login">xdb</h2>
                 <div className="header-nav-collapse">
