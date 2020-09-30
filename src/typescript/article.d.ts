@@ -20,6 +20,7 @@ declare namespace articleType {
         title: string
         userName: string
         hot?: boolean
+        show?: boolean
     }
 
     export interface articleListDataType {

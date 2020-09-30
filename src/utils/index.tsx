@@ -36,6 +36,18 @@ export const throttle = (func: Function, wait: number, assignTime: number): Func
     }
 }
 
+export function debounce(func: Function, wait: number) {
+    let timeout: any = null
+    const context = this
+    return function() {
+        var args = arguments
+        if (timeout) clearTimeout(timeout)
+        timeout = setTimeout(function() {
+            func.apply(context, args)
+        }, wait)
+    }
+}
+
 /** 计算一个时间与当前时间的差 */
 export const getArticleDate = (timesData: string) => {
     const dateBegin = new Date(timesData)

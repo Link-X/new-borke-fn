@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
 import { Input, Button } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 
 import Header from '@/common/header'
 
-import { getTags, getArticle, getMajor } from './server'
+import { getTags, getArticle } from './server'
 
 import { getArticleDate } from '@/utils/index'
 
@@ -15,10 +16,20 @@ import './index.less'
 const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
     const [navList, setNavList] = useState<articleType.tagType[]>([])
     const [articleList, setArticleList] = useState<articleType.articleItemType[]>([])
+    const [activedTag, setActivedTag] = useState<string | number>('all')
+    const [val, setVal] = useState<string>('')
 
     const getTagsFunc = async (): Promise<any> => {
         const res = await getTags()
         setNavList(res || [])
+    }
+
+    const setListItem = (list: articleType.articleItemType[], hot?: boolean) => {
+        return list.map((v) => {
+            v.hot = v.major || v.major2
+            v.show = true
+            return v
+        })
     }
 
     const getArticleFunc = async (): Promise<any> => {
@@ -26,38 +37,54 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
             page: 0,
             pageSize: 10000
         })
-        const res2 = await getMajor()
-        res2.major.forEach((v) => {
-            v.hot = true
-        })
-        res2.major2.forEach((v) => {
-            v.hot = true
-        })
+        const list = setListItem(res.list)
         setArticleList(
-            [...res2.major, ...res2.major2, ...res.list].sort((a, b) => {
+            list.sort(() => {
                 return Math.random() - 0.5
             })
         )
     }
 
-    const getMajorFunc = async (): Promise<any> => {
-        const res = await getMajor()
-        console.log(res.major, res.major2)
-    }
-
     const getData = async (): Promise<any> => {
         getTagsFunc()
         getArticleFunc()
-        getMajorFunc()
     }
 
     const tagName = (id: number): string => {
-        return navList.find((v) => v.id === id).tag
+        return navList.find((v) => v.id === id)?.tag
     }
 
     const goDetails = (item: articleType.articleItemType) => {
         console.log(item)
         props.history.push(`/article/details?id=${item.id}`)
+    }
+
+    const filterTag = (e: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
+        const tagId = e.target.getAttribute('tag-id')
+        if (!tagId) {
+            return
+        }
+        setActivedTag(tagId)
+        setArticleList(
+            articleList.map((v) => {
+                if (tagId === 'hot') {
+                    v.show = v.hot
+                } else {
+                    v.show = tagId === 'all' || v.tagId === +tagId
+                }
+                return v
+            })
+        )
+    }
+
+    const changeVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setVal(e.target.value)
+        setArticleList(
+            articleList.map((v) => {
+                v.show = v.title.includes(e.target.value)
+                return v
+            })
+        )
     }
 
     useEffect(() => {
@@ -72,18 +99,36 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                     <div className="left">
                         <ul>
                             <li className="td">
-                                <ul>
+                                <ul onClick={filterTag}>
                                     <li>
-                                        <Input type="text" placeholder="搜索" />
+                                        <Input
+                                            value={val}
+                                            prefix={<SearchOutlined color="#e8e8e8" size={20} />}
+                                            onChange={changeVal}
+                                            type="text"
+                                            placeholder="可输入标题搜索"
+                                        />
                                     </li>
-                                    <li className="active">全部</li>
-                                    <li>星标</li>
+                                    <li className={`${activedTag === 'all' && 'active'}`} tag-id="all">
+                                        全部
+                                    </li>
+                                    <li className={`${activedTag === 'hot' && 'active'}`} tag-id="hot">
+                                        星标
+                                    </li>
                                 </ul>
                             </li>
                             <li className="bd">
-                                <ul>
+                                <ul onClick={filterTag}>
                                     {navList.map((v) => {
-                                        return <li key={v.id}>{v.tag}</li>
+                                        return (
+                                            <li
+                                                className={`${activedTag === String(v.id) && 'active'}`}
+                                                tag-id={v.id}
+                                                key={v.id}
+                                            >
+                                                {v.tag}
+                                            </li>
+                                        )
                                     })}
                                 </ul>
                             </li>
@@ -93,7 +138,11 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                         <ul>
                             {articleList.map((v, i) => {
                                 return (
-                                    <li key={i} className={`article-item ${v.hot ? 'article-item_hot' : ''}`}>
+                                    <li
+                                        key={i}
+                                        style={{ display: v.show ? 'flex' : 'none' }}
+                                        className={`article-item ${v.hot ? 'article-item_hot' : ''}`}
+                                    >
                                         <div className="hd img-box">
                                             <div
                                                 className="img-back"
@@ -111,9 +160,6 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                                             <div>
                                                 <span>{tagName(v.tagId)}</span>
                                                 <div>
-                                                    {/* <Button type="primary" className="gray-btn">
-                                                        编辑
-                                                    </Button> */}
                                                     <Button
                                                         onClick={goDetails.bind(this, v)}
                                                         type="primary"
