@@ -74,3 +74,34 @@ export const getArticleDate = (timesData: string) => {
 
     return timesString
 }
+
+interface getUrlParamsType {
+    url: string
+    key: string
+}
+export const getUrlParam = <T extends object>(paramsObj?: getUrlParamsType): T | string => {
+    let { url, key } = paramsObj || {}
+    if (!url) {
+        url = window && window.location && window.location.href
+    }
+    if (!url) {
+        return {} as T
+    }
+    const urlformat = url
+    const re = /[^?#&]+=[^?#&]+/g
+    const paramsarr = urlformat.match(re) || []
+    const returnjson: any = {}
+    paramsarr.forEach((data) => {
+        const splitdata = data.split('=')
+        const sp0 = splitdata && splitdata[0]
+        const sp1 = splitdata && splitdata[1]
+        if (sp0) {
+            returnjson[sp0] = sp1
+        }
+    })
+    if (key) {
+        return (returnjson && returnjson[key]) || ''
+    } else {
+        return returnjson
+    }
+}

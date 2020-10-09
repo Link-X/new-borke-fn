@@ -45,4 +45,34 @@ declare namespace articleType {
     export interface getMajorType {
         (): Promise<majorItemType>
     }
+
+    /** 文章详情 */
+    export interface articleDetails {
+        articleImg: string
+        articleReadCountLen: number
+        createDate: string
+        id: number
+        introduce: string
+        isEdit: boolean
+        loveLen: number
+        major: boolean
+        major2: boolean
+        markdown: string
+        markdown_index: any
+        pinglunList: any[]
+        readNumber: number
+        tag: any
+        tagId: number
+        title: string
+        title_index: number
+        userId: number
+        userImage: string
+        userLoveStatus: string
+        userName: string
+    }
+
+    /** get article details */
+    export interface getArtcileDetails {
+        (id: string): Promise<articleDetails>
+    }
 }

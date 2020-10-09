@@ -55,8 +55,7 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
     }
 
     const goDetails = (item: articleType.articleItemType) => {
-        console.log(item)
-        props.history.push(`/article/details?id=${item.id}`)
+        props.history.push(`/article-details?id=${item.id}`)
     }
 
     const filterTag = (e: React.MouseEvent<HTMLUListElement, MouseEvent>) => {
@@ -67,10 +66,12 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
         setActivedTag(tagId)
         setArticleList(
             articleList.map((v) => {
-                if (tagId === 'hot') {
+                if (tagId === 'all') {
+                    v.show = true
+                } else if (tagId === 'hot') {
                     v.show = v.hot
                 } else {
-                    v.show = tagId === 'all' || v.tagId === +tagId
+                    v.show = v.tagId === +tagId
                 }
                 return v
             })
@@ -81,7 +82,7 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
         setVal(e.target.value)
         setArticleList(
             articleList.map((v) => {
-                v.show = v.title.includes(e.target.value)
+                v.show = v.title.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase())
                 return v
             })
         )
