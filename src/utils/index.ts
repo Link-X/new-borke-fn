@@ -79,7 +79,7 @@ interface getUrlParamsType {
     url: string
     key: string
 }
-export const getUrlParam = <T extends object>(paramsObj?: getUrlParamsType): T | string => {
+export const getUrlParam = <T extends object>(paramsObj?: getUrlParamsType): T => {
     let { url, key } = paramsObj || {}
     if (!url) {
         url = window && window.location && window.location.href
@@ -104,4 +104,20 @@ export const getUrlParam = <T extends object>(paramsObj?: getUrlParamsType): T |
     } else {
         return returnjson
     }
+}
+
+export const formatDateTime = (inputTime: string): string => {
+    const date = new Date(inputTime)
+    const y = date.getFullYear()
+    let m: any = date.getMonth() + 1
+    m = m < 10 ? `0${m}${m}` : m
+    let d: any = date.getDate()
+    d = d < 10 ? `0${d}` : d
+    let h: any = date.getHours()
+    h = h < 10 ? `0${h}` : h
+    let minute: any = date.getMinutes()
+    let second: any = date.getSeconds()
+    minute = minute < 10 ? `0${minute}` : minute
+    second = second < 10 ? `0${second}` : second
+    return `${y}-${m}-${d} ${h}:${minute}:${second}`
 }

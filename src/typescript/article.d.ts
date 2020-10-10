@@ -46,6 +46,16 @@ declare namespace articleType {
         (): Promise<majorItemType>
     }
 
+    export interface pinglunDataType {
+        articleId: number
+        createDate: string
+        id: number
+        text: string
+        userId: number
+        userImage: string
+        userName: string
+    }
+
     /** 文章详情 */
     export interface articleDetails {
         articleImg: string
@@ -59,7 +69,7 @@ declare namespace articleType {
         major2: boolean
         markdown: string
         markdown_index: any
-        pinglunList: any[]
+        pinglunList: pinglunDataType[]
         readNumber: number
         tag: any
         tagId: number
@@ -74,5 +84,26 @@ declare namespace articleType {
     /** get article details */
     export interface getArtcileDetails {
         (id: string): Promise<articleDetails>
+    }
+
+    export interface addCommentArticleParamsType {
+        text: string
+        articleId: string
+    }
+
+    /** 评论 */
+    export interface addCommentArticleFunc {
+        (params: addCommentArticleParamsType): Promise<pinglunDataType>
+    }
+
+    export interface loveNumType {
+        articleReadCountLen: number
+        loveLen: number
+        status: string
+    }
+
+    /** 点赞 */
+    export interface loveArticleFunc {
+        (params: { id: number }): Promise<loveNumType>
     }
 }
