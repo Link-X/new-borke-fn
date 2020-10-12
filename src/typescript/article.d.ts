@@ -106,4 +106,9 @@ declare namespace articleType {
     export interface loveArticleFunc {
         (params: { id: number }): Promise<loveNumType>
     }
+
+    /** 删除文章 */
+    export interface delArticleFunc {
+        (params: { id: number }): Promise<any>
+    }
 }

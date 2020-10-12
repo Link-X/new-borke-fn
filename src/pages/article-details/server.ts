@@ -12,6 +12,12 @@ export const addCommentArticle: articleType.addCommentArticleFunc = (
     return post<articleType.pinglunDataType>('/add/article-comment', params)
 }
 
+/** 点赞 */
 export const loveArticle: articleType.loveArticleFunc = (parasm) => {
     return post('/love/article', parasm)
+}
+
+/** 删除文章 */
+export const delArticleRequest: articleType.delArticleFunc = (params) => {
+    return post('/del/article', params)
 }

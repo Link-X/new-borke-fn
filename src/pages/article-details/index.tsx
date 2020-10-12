@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 
 import ReactMarkdown from 'react-markdown'
-import { message, Button, Input } from 'antd'
+import { message, Button, Input, Modal } from 'antd'
 
-import CodeStyle from '@/pages/article-details/code-style'
-import HeadingBlock from '@/pages/article-details/headering-block'
+import CodeStyle from '@/common/article/code-style'
+import HeadingBlock from '@/common/article/headering-block'
 
 import { getUrlParam, formatDateTime, throttle } from '@/utils/index'
 
-import { getArticleDetails, addCommentArticle, loveArticle } from './server'
+import { getArticleDetails, addCommentArticle, loveArticle, delArticleRequest } from './server'
 
 import { propsRoute } from '@/typescript/index'
 
@@ -17,7 +17,7 @@ import 'github-markdown-css'
 
 type Iprops = propsRoute
 
-// const { confirm } = Modal
+const { confirm } = Modal
 const { TextArea } = Input
 const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const [details, setDetails] = useState<articleType.articleDetails>({ pinglunList: [] } as any)
@@ -28,7 +28,6 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const areaRef = useRef<HTMLInputElement>()
 
     const init = async () => {
-        // const { search } = props.location
         if (!routerParams.id) {
             message.error('参数错误')
             return
@@ -37,9 +36,38 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
         setDetails(res)
     }
 
-    const editArticle = () => {}
+    const editArticle = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault()
+        props.history.push(`/edit-article?id=${details.id}`)
+    }
 
-    const delArticle = () => {}
+    const delTip = (cb: Function, text: string) => {
+        confirm({
+            title: text,
+            content: '确定要删除吗？',
+            okType: 'danger',
+            cancelText: '取消',
+            okText: '删除',
+            onOk: () => {
+                cb()
+            },
+            onCancel() {
+                console.log('Cancel')
+            }
+        })
+    }
+
+    const delArticle = () => {
+        delTip(() => {
+            delTip(async () => {
+                await delArticleRequest({ id: details.id })
+                message.success('删除成功')
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 500)
+            }, '再次确定?')
+        }, '确定要删除？')
+    }
 
     const loverArticle = async () => {
         const data = await loveArticle({ id: +routerParams.id })

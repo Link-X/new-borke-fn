@@ -88,6 +88,13 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
         )
     }
 
+    const getIsNull = (): boolean => {
+        if (!(articleList && articleList.length)) {
+            return false
+        }
+        return articleList.some((v) => v.show)
+    }
+
     useEffect(() => {
         getData()
     }, [])
@@ -136,45 +143,51 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                         </ul>
                     </div>
                     <div className="right">
-                        <ul>
-                            {articleList.map((v, i) => {
-                                return (
-                                    <li
-                                        key={i}
-                                        style={{ display: v.show ? 'flex' : 'none' }}
-                                        className={`article-item ${v.hot ? 'article-item_hot' : ''}`}
-                                    >
-                                        <div className="hd img-box">
-                                            <div
-                                                className="img-back"
-                                                style={{ backgroundImage: `url('${v.articleImg}')` }}
-                                            >
-                                                <div className="article-date">
-                                                    {getArticleDate(v.createDate)}
+                        {getIsNull() ? (
+                            <ul>
+                                {articleList.map((v, i) => {
+                                    return (
+                                        <li
+                                            key={v.id}
+                                            style={{ display: v.show ? 'flex' : 'none' }}
+                                            className={`article-item ${v.hot ? 'article-item_hot' : ''}`}
+                                        >
+                                            <div className="hd img-box">
+                                                <div
+                                                    className="img-back"
+                                                    style={{ backgroundImage: `url('${v.articleImg}')` }}
+                                                >
+                                                    <div className="article-date">
+                                                        {getArticleDate(v.createDate)}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="td">
-                                            <div>
-                                                <h3 className="article-name">{v.title}</h3>
-                                            </div>
-                                            <div>
-                                                <span>{tagName(v.tagId)}</span>
+                                            <div className="td">
                                                 <div>
-                                                    <Button
-                                                        onClick={goDetails.bind(this, v)}
-                                                        type="primary"
-                                                        className="white-btn"
-                                                    >
-                                                        查看
-                                                    </Button>
+                                                    <h3 className="article-name">{v.title}</h3>
+                                                </div>
+                                                <div>
+                                                    <span>{tagName(v.tagId)}</span>
+                                                    <div>
+                                                        <Button
+                                                            onClick={goDetails.bind(this, v)}
+                                                            type="primary"
+                                                            className="white-btn"
+                                                        >
+                                                            查看
+                                                        </Button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        ) : (
+                            <div className="not-data">
+                                <i className="iconfont icon-zanwushuju"></i>
+                            </div>
+                        )}
                     </div>
                 </section>
             </div>
