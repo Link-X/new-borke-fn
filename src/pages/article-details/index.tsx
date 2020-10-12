@@ -8,7 +8,7 @@ import HeadingBlock from '@/common/article/headering-block'
 
 import { getUrlParam, formatDateTime, throttle } from '@/utils/index'
 
-import { getArticleDetails, addCommentArticle, loveArticle, delArticleRequest } from './server'
+import { getArticleDetails, addCommentArticle, loveArticle, delArticleRequest } from '@/server'
 
 import { propsRoute } from '@/typescript/index'
 

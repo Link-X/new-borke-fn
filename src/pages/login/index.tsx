@@ -8,7 +8,7 @@ import { setImageBackground } from '@/utils/login_back'
 
 import { propsRoute } from '@/typescript/index'
 
-import { login } from './server'
+import { login } from '@/server'
 
 import './index.less'
 

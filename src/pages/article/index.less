@@ -12,6 +12,10 @@
     // margin-top: 100px;
 
     .ant-input-affix-wrapper {
+        position: absolute;
+        margin: 0 auto;
+        left: -13px;
+        top: 5px;
         width: 90%;
         height: 35px;
     }
@@ -24,6 +28,10 @@
 }
 .content .left ul .td {
     border-bottom: solid 1px #e8e8e8;
+    .td-ul {
+        position: relative;
+        padding-top: 30px;
+    }
 }
 .content .left ul .td li:nth-child(1) input {
     font-size: 12px;
@@ -162,6 +170,7 @@
     border-radius: 3px;
     &:before,
     &:after {
+        display: none;
         content: '';
         position: absolute;
         left: 0;
@@ -175,12 +184,16 @@
         margin: -5px;
         z-index: -1;
     }
-
-    &:before {
-        animation: lineA 6s linear infinite;
-    }
-    &:after {
-        animation: lineB 6s linear infinite;
+    &:hover {
+        &:before,&:after{
+            display: block;
+        }
+        &:before {
+            animation: lineA 8s linear infinite;
+        }
+        &:after {
+            animation: lineB 8s linear infinite;
+        }
     }
 }
 
