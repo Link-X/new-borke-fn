@@ -1,18 +1,7 @@
 import Verify from '@/utils/verify'
 
-interface formType {
-    markdown: string
-    tagId: string
-    title: string
-    articleImg: string
-}
-interface statusType {
-    result: boolean
-    message: string
-}
-
 const verifyFunc = new Verify({}, {})
-export const VisitorFormVerify = <T>(formData: formType): Promise<T> => {
+export const VisitorFormVerify = <T>(formData: articleType.formType): Promise<T> => {
     return new Promise((resolve, reject) => {
         verifyFunc.$init(formData, {
             title: [
@@ -46,7 +35,7 @@ export const VisitorFormVerify = <T>(formData: formType): Promise<T> => {
                 }
             ]
         })
-        verifyFunc.validate((status: T & statusType) => {
+        verifyFunc.validate((status: T & articleType.venifyType) => {
             if (status.result) {
                 return reject(status)
             }

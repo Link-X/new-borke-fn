@@ -121,3 +121,55 @@ export const formatDateTime = (inputTime: string): string => {
     second = second < 10 ? `0${second}` : second
     return `${y}-${m}-${d} ${h}:${minute}:${second}`
 }
+
+const getImgSize = (base64url: string = ''): number => {
+    // 获取图片base64大小
+    const str = base64url.replace('data:image/jpeg;base64,', '')
+    const strLength: number = str.length
+    const fileLength = parseInt(String(strLength - (strLength / 8) * 2))
+    let size = ''
+    size = (fileLength / 1024).toFixed(2)
+    return parseInt(size)
+}
+
+const compressImage = (base64: any): Promise<string> => {
+    const image = new Image()
+    let compressBase64 = ''
+    image.src = base64
+    return new Promise((resolve, reject) => {
+        image.onload = function() {
+            const width = image.width
+            const height = image.height
+            const canvas = document.createElement('canvas')
+            const ctx = canvas.getContext('2d')
+            canvas.width = width
+            canvas.height = height
+            ctx.drawImage(image, 0, 0, width, height)
+            compressBase64 = canvas.toDataURL('image/jpeg', 0.6)
+            resolve(compressBase64)
+        }
+    })
+}
+
+export const compressionImg = async (e: React.ChangeEvent<HTMLInputElement>): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        const file = e.target.files[0]
+        const fileType = file.type || 'image/png'
+        if (fileType.indexOf('image') === -1) {
+            reject(new Error('文件类型错误'))
+            return
+        }
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onloadend = async (e) => {
+            const fileMaxSize = 5120
+            const base64 = await compressImage(e.target.result)
+            const size = getImgSize(base64) || 0
+            if (size > fileMaxSize) {
+                reject(new Error('文章图片过大'))
+                return
+            }
+            resolve(base64)
+        }
+    })
+}

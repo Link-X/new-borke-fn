@@ -3,18 +3,27 @@ import React from 'react'
 import { Tooltip } from 'antd'
 
 interface Iprops {
-    clickFile(e: boolean): void
+    clickFile(): void
     activedPreview(e: React.MouseEvent<HTMLLIElement, MouseEvent>): void
     preview: boolean
+    centerInput: React.LegacyRef<HTMLInputElement>
+    centerUploadImg: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const EditTip = (props: Iprops) => {
     const { preview } = props
     return (
         <ul className="textare-tools">
+            <input
+                type="file"
+                onChange={props.centerUploadImg}
+                accept="image/*"
+                className="centeruploadInput"
+                ref={props.centerInput}
+            ></input>
             <li
                 onClick={(e) => {
-                    props.clickFile(true)
+                    props.clickFile()
                 }}
             >
                 <Tooltip title="上传图片">

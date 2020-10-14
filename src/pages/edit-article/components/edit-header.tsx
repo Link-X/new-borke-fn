@@ -12,7 +12,7 @@ interface Iprops {
     tagData: articleType.tagType[]
     setInp(e: string): void
     uploadImg(e: React.ChangeEvent<HTMLInputElement>): void
-    clickFile(e: boolean): void
+    clickFile(): void
     removeImg(): void
     selectTag(v: articleType.tagType): void
     submit(e: React.MouseEvent<HTMLElement, MouseEvent>): void
@@ -49,13 +49,7 @@ const EditHeader = (props: Iprops): JSX.Element => {
                             content={
                                 <div className="content">
                                     {!form.articleImg ? (
-                                        <p
-                                            onClick={() => {
-                                                props.clickFile(false)
-                                            }}
-                                        >
-                                            点击添加封面
-                                        </p>
+                                        <p onClick={props.clickFile}>点击添加封面</p>
                                     ) : (
                                         <div className="edit-article_img_box">
                                             <span onClick={props.removeImg}>x</span>

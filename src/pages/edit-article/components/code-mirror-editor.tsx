@@ -54,6 +54,7 @@ interface Iprops {
     textAreaClassName?: string
 }
 class CodeMirrorEditor extends React.Component<Iprops, any> {
+    editor: any
     constructor(props: Iprops) {
         super(props)
         this.state = { isControlled: Boolean(this.props.value) }

@@ -2,6 +2,7 @@ declare namespace articleType {
     export interface tagType {
         id: number
         tag: string
+        checkouted: boolean
     }
     /** 获取标签 */
     export interface getTagsFunc {
@@ -110,5 +111,31 @@ declare namespace articleType {
     /** 删除文章 */
     export interface delArticleFunc {
         (params: { id: number }): Promise<any>
+    }
+
+    interface stateType {
+        form: formType
+        tagData: articleType.tagType[]
+        preview: boolean
+    }
+    interface formType {
+        markdown: string
+        tagId: string
+        title: string
+        articleImg: string
+    }
+
+    interface venifyType {
+        result: boolean
+        message: string
+    }
+
+    interface uploadType {
+        file: string
+    }
+
+    /** 上传图片 */
+    interface uploadImageFunct {
+        (params: uploadType): Promise<{ path: string }>
     }
 }

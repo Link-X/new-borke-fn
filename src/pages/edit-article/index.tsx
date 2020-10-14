@@ -1,48 +1,40 @@
 import React, { useEffect, useRef } from 'react'
 
 import ReactMarkdown from 'react-markdown'
+import { message } from 'antd'
 
 import CodeMirrorEditor from './components/code-mirror-editor'
 import CodeStyle from '@/common/article/code-style'
 import EditTip from './components/tip'
 import EditHeader from './components/edit-header'
 
-import { markdownText } from './default'
-
 import { useSetState } from '@/hooks/index'
+import { markdownText } from './default'
+import { VisitorFormVerify } from './utils'
+import { compressionImg } from '@/utils'
+
+import { getTags, uploadImage } from '@/server'
 
 import { propsRoute } from '@/typescript'
-
-import { VisitorFormVerify } from './utils'
 
 import 'github-markdown-css'
 import './index.less'
 
 type Iprops = propsRoute
 
-interface stateType {
-    form: formType
-    tagData: articleType.tagType[]
-    preview: boolean
-}
-interface formType {
-    markdown: string
-    tagId: string
-    title: string
-    articleImg: string
-}
-
-interface venifyType {
-    result: boolean
-    message: string
+interface docType {
+    doc: {
+        scrollTop: number
+        height: number
+    }
 }
 
 const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
-    const [state, setState] = useSetState<stateType>({
+    const [state, setState] = useSetState<articleType.stateType>({
         form: {
             markdown: markdownText,
             tagId: '',
-            title: 'title',
+            title: '',
             articleImg: ''
         },
         tagData: [],
@@ -50,54 +42,118 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     })
 
     const codeMirror = useRef()
-    const uploadInput = useRef()
-    const editArticle = useRef()
-    const previewBox = useRef()
+    const uploadInput = useRef<HTMLInputElement>()
+    const centerInput = useRef<HTMLInputElement>()
+    const editArticle = useRef<HTMLDivElement>()
+    const previewBox = useRef<HTMLDivElement>()
 
-    const editOnScroll = () => {}
+    const editOnScroll = (e: docType) => {
+        const scrollTop = e.doc.scrollTop
+        const valHeight = e.doc.height
+        const boxHeight = editArticle.current.getBoundingClientRect().height
+        const previewHeight = document.querySelector('.markdown-body').getBoundingClientRect().height
+        const scale = (valHeight - boxHeight) / (previewHeight - boxHeight)
+        previewBox.current.scrollTo(0, scrollTop / scale)
+    }
 
     const onChange = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         const { form } = state
         form.markdown = e.target.value
+        setStatForm()
+    }
+
+    const activedPreview = (e: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {
         setState({
-            form: { ...form }
+            preview: !preview
         })
     }
 
-    const activedPreview = (e: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {}
-
-    const clickFile = (e: boolean) => {
+    const setStatForm = () => {
         setState({
-            preview: e
+            form: { ...form }
         })
     }
 
     const setInp = (e: string) => {
         const { form } = state
         form.title = e
+        setStatForm()
+    }
+
+    const upload = async (e: React.ChangeEvent<HTMLInputElement>): Promise<string> => {
+        const imgBase64 = await compressionImg(e)
+        const { path } = await uploadImage({ file: imgBase64 })
+        uploadInput.current.value = ''
+        centerInput.current.value = ''
+        return path
+    }
+
+    const uploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { form } = state
+        form.articleImg = await upload(e)
+        setStatForm()
+    }
+
+    const centerUploadImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const path = await upload(e)
+        const { form } = state
+        form.markdown += `  ![](${path})`
         setState({
             form: { ...form }
         })
+        setTimeout(() => {
+            codeMirror.current.setCursor()
+        }, 20)
     }
 
-    const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {}
+    const removeImg = () => {
+        const { form } = state
+        form.articleImg = ''
+        uploadInput.current.value = ''
+        setStatForm()
+    }
 
-    const removeImg = () => {}
-
-    const selectTag = (v: articleType.tagType) => {}
+    const selectTag = (v: articleType.tagType) => {
+        console.log(v)
+        let { tagData } = state
+        tagData = tagData.map((item) => {
+            item.checkouted = item.id === v.id
+            return { ...item }
+        })
+        setState({
+            tagData
+        })
+    }
 
     const submit = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.stopPropagation()
         try {
-            await VisitorFormVerify<venifyType>(form)
+            await VisitorFormVerify<articleType.venifyType>(form)
         } catch (status) {
-            console.log(status)
+            message.error(status.message)
         }
+    }
+
+    const getNav = async () => {
+        const res = await getTags()
+        setState({
+            tagData: res
+        })
+        console.log(res)
+    }
+
+    const clickFile = () => {
+        uploadInput.current.click()
+    }
+    const clickFile2 = () => {
+        centerInput.current.click()
     }
 
     const { form, tagData, preview } = state
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+        getNav()
+    }, [])
 
     return (
         <div className="edit-article_box">
@@ -138,7 +194,13 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
                         renderers={{ code: CodeStyle }}
                         source={form.markdown}
                     ></ReactMarkdown>
-                    <EditTip preview={preview} clickFile={clickFile} activedPreview={activedPreview} />
+                    <EditTip
+                        centerInput={centerInput}
+                        centerUploadImg={centerUploadImg}
+                        preview={preview}
+                        clickFile={clickFile2}
+                        activedPreview={activedPreview}
+                    />
                 </div>
             </div>
         </div>
