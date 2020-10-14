@@ -3,21 +3,27 @@ import React from 'react'
 import { Popover, Button } from 'antd'
 
 interface Iprops {
-    form: any
+    form: {
+        markdown: string
+        tagId: string
+        title: string
+        articleImg: string
+    }
     tagData: articleType.tagType[]
-    setInp(e: React.ChangeEvent<HTMLInputElement>): void
+    setInp(e: string): void
     uploadImg(e: React.ChangeEvent<HTMLInputElement>): void
     clickFile(e: boolean): void
     removeImg(): void
     selectTag(v: articleType.tagType): void
-    submit(): void
+    submit(e: React.MouseEvent<HTMLElement, MouseEvent>): void
     uploadInput: React.LegacyRef<HTMLInputElement>
 }
 
 const EditHeader = (props: Iprops): JSX.Element => {
     const { form, tagData, uploadInput } = props
+
     return (
-        <div>
+        <div className="edit-header">
             <input
                 type="file"
                 onChange={props.uploadImg}
@@ -27,7 +33,13 @@ const EditHeader = (props: Iprops): JSX.Element => {
             ></input>
             <div className="edit-article_title">
                 <div className="edit-article_inp">
-                    <input value={form.title} onChange={props.setInp} placeholder="请输入文章标题..."></input>
+                    <input
+                        defaultValue={form.title}
+                        onChange={(e) => {
+                            props.setInp(e.target.value)
+                        }}
+                        placeholder="请输入文章标题..."
+                    ></input>
                 </div>
                 <div className="edit-article-btn">
                     <div style={{ marginRight: '10px', display: 'flex', alignItems: 'center' }}>

@@ -93,6 +93,10 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
         return articleList.some((v) => v.show)
     }
 
+    const goAddArticle = () => {
+        props.history.push('/edit-article')
+    }
+
     useEffect(() => {
         getData()
     }, [])
@@ -109,6 +113,11 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
                             navList={navList}
                             changeVal={debounce(changeVal, 500)}
                         />
+                        <div className="article-edit-box">
+                            <a onClick={goAddArticle}>
+                                <i className="iconfont icon-xiewenzhang edit-article"></i>
+                            </a>
+                        </div>
                     </div>
                     <div className="right">
                         {getIsNull() ? (

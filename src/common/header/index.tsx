@@ -9,7 +9,7 @@ interface navItmeType {
     value: number
     url: string
 }
-const navList = [
+const navList: navItmeType[] = [
     {
         label: '首页',
         value: 1,
@@ -20,22 +20,14 @@ const navList = [
         value: 2,
         url: '/article'
     },
-    // {
-    //     label: '相册',
-    //     value: 3,
-    //     router: true,
-    //     url: '/photo-album'
-    // },
     {
-        label: '登陆',
-        value: 5,
-        router: true,
-        url: '/login'
+        label: '写文章',
+        value: 3,
+        url: '/edit-article'
     },
     {
         label: '资料',
         value: 6,
-        router: true,
         url: '/datum'
     }
 ]
@@ -49,7 +41,7 @@ const Header: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const [checked, setChecked] = useState<boolean>(false)
 
     const goPage = (v: navItmeType) => {
-        props.router.history.replace(v.url)
+        props.router.history.push(v.url)
     }
     return (
         <nav className={`xdb-home_header ${props.className}`}>

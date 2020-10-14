@@ -1,214 +1,213 @@
-.edit-article-edit {
-  display: flex;
-  max-height: 100%;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  padding-top: 59px;
-  >div {
-    width: 50%;
-  }
-  .cm-s-material .CodeMirror-cursor {
-    border-left: 1px solid #333;
-  }
-  .cm-header-3 {
-    color: #1BA2F0;
-    margin-bottom: 10px;
-    display: inline-block;
-  }
-}
-.editor-pane {
-  position: relative;
-  >div{
-    height: 100%;
-  }
-}
-.CodeMirror {
-  height: 100%;
-}
-.markdown-body {
-  box-sizing: border-box;
-  min-width: 200px;
-  width: 1200px;    
-  line-height: 2.5;
-}
-.edit-article_title {
-  position: absolute;
-  width: 100%;
-  z-index: 1;
-  display: flex;
-  height: 59px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  padding: 0 20px;
-}
-.edit-article_inp {
-  width: 88%;
-  input {
-    margin: 0;
-    padding: 0;
-    font-size: 22px;
-    font-weight: 700;
-    color: #000;
-    border: none;
-    outline: none;
-    width: 100%;
-    height: 100%;
-  }
-}
-.edit-article-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  cursor: pointer;
-  flex: 1;
-}
-.article-btn_user {
-  width: 33px;
-  height: 33px;
-  border-radius: 50%;
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-.article-btn_subimt {
-  color: #007fff;
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.result-pane {
-  padding: 10px 20px;
-  overflow: scroll;
-  position: relative;
-}
-.content {
-  width: 100%;
-  height: 116px;
-  background-color: #fff;
-  text-align: center;
-  line-height: 116px;
-  cursor: pointer;
-  p {
-    &:hover{
-      background-color: #ddd;
+.edit-article_box {
+    .edit-article-edit {
+        display: flex;
+        max-height: 100%;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        padding-top: 59px;
+        > div {
+            width: 50%;
+        }
+        .cm-s-material .CodeMirror-cursor {
+            border-left: 1px solid #333;
+        }
+        .cm-header-3 {
+            color: #1ba2f0;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
     }
-  }
-}
-.article-submit_box {
-
-}
-.submit-box_tag {
-  span {
-    display: block;
-    width: 100%;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  li{
-    display: inline-block;
-    margin: 0 10px 14px 0;
-    padding: 3px 6px;
-    font-size: 12px;;
-    white-space: nowrap;
-    border: 1px solid #f1f1f1;
-    border-radius: 2px;
-    cursor: pointer;
-  }
-  .article {
-    color: #007fff;
-    border-color: rgba(0,127,255,.15);
-    background-color: rgba(0,127,255,.05);
-  }
-}
-.submit-submit {
-  
-}
-.article-submit_box {
-  min-width: 375px;
-}
-.submit-submit {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-.uploadInput {
-  opacity: 0;
-  position: absolute;
-  top: -1000
-}
-.edit-article-update_img {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  i {
-    font-size: 17px;
-    font-weight: bold;
-  }
-}
-.edit-article_img_box {
-  height: 100%;
-  max-width: 260px;
-  position: relative;
-  span {
-    position: absolute;
-    top: -1px;
-    right: -4px;
-    width: 14px;
-    height: 14px;
-    background-color: red;
-    color: #fff;
-    line-height: 12px;
-    border-radius: 50%;
-  }
-}
-.textare-tools {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 50%;
-  height: 33px;
-  padding: 5px 26px;
-  background-color: #fff;
-  z-index: 2;
-  border-top: 1px solid #ddd;
-  li {
-    cursor: pointer;
-    margin-left: 18px;
-    i {
-      font-size: 20px;
+    .editor-pane {
+        position: relative;
+        > div {
+            height: 100%;
+        }
     }
-  }
+    .CodeMirror {
+        height: 100%;
+    }
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        width: 1200px;
+        line-height: 2.5;
+    }
+    .edit-article_title {
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        height: 59px;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 0 20px;
+    }
+    .edit-article_inp {
+        width: 88%;
+        input {
+            margin: 0;
+            padding: 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: #000;
+            border: none;
+            outline: none;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .edit-article-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        cursor: pointer;
+        flex: 1;
+    }
+    .article-btn_user {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .article-btn_subimt {
+        color: #007fff;
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .result-pane {
+        padding: 10px 20px;
+        overflow: scroll;
+        position: relative;
+    }
+    .content {
+        width: 100%;
+        height: 116px;
+        background-color: #fff;
+        text-align: center;
+        line-height: 116px;
+        cursor: pointer;
+        p {
+            &:hover {
+                background-color: #ddd;
+            }
+        }
+    }
+    .article-submit_box {
+    }
+    .submit-box_tag {
+        span {
+            display: block;
+            width: 100%;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        li {
+            display: inline-block;
+            margin: 0 10px 14px 0;
+            padding: 3px 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            border: 1px solid #f1f1f1;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .article {
+            color: #007fff;
+            border-color: rgba(0, 127, 255, 0.15);
+            background-color: rgba(0, 127, 255, 0.05);
+        }
+    }
+    .submit-submit {
+    }
+    .article-submit_box {
+        min-width: 375px;
+    }
+    .submit-submit {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .uploadInput {
+        opacity: 0;
+        position: absolute;
+        top: -1000;
+    }
+    .edit-article-update_img {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        i {
+            font-size: 17px;
+            font-weight: bold;
+        }
+    }
+    .edit-article_img_box {
+        height: 100%;
+        max-width: 260px;
+        position: relative;
+        span {
+            position: absolute;
+            top: -1px;
+            right: -4px;
+            width: 14px;
+            height: 14px;
+            background-color: red;
+            color: #fff;
+            line-height: 12px;
+            border-radius: 50%;
+        }
+    }
+    .textare-tools {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 50%;
+        height: 33px;
+        padding: 5px 26px;
+        background-color: #fff;
+        z-index: 2;
+        border-top: 1px solid #ddd;
+        li {
+            cursor: pointer;
+            margin-left: 18px;
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+    .engter-edit {
+        .markdown-body {
+            width: auto;
+            padding-bottom: 39px;
+        }
+    }
+    .preview-edit {
+        .markdown-body {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        width: 100% !important;
+    }
+    .page-tools {
+        position: fixed;
+        bottom: 20px;
+        right: 22px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        i {
+            font-size: 22px;
+        }
+    }
 }
-.engter-edit {
-  .markdown-body {
-      width: auto;
-      padding-bottom: 39px;
-  }
-}
-.preview-edit {
-  .markdown-body {
-      width: 1200px;
-      margin: 0 auto;
-  }
-  width: 100%!important;
-}
-.page-tools {
-  position: fixed;
-  bottom: 20px;
-  right: 22px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  i {
-    font-size: 22px;
-  }
-}
-

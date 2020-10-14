@@ -13,14 +13,11 @@ import { useSetState } from '@/hooks/index'
 
 import { propsRoute } from '@/typescript'
 
-import Verify from '@/utils/verify'
+import { VisitorFormVerify } from './utils'
 
 import 'github-markdown-css'
 import './index.less'
 
-const verifyFunc = new Verify({}, {})
-
-console.log(verifyFunc)
 type Iprops = propsRoute
 
 interface stateType {
@@ -35,16 +32,21 @@ interface formType {
     articleImg: string
 }
 
+interface venifyType {
+    result: boolean
+    message: string
+}
+
 const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const [state, setState] = useSetState<stateType>({
         form: {
             markdown: markdownText,
             tagId: '',
-            title: '',
+            title: 'title',
             articleImg: ''
         },
         tagData: [],
-        preview: false
+        preview: true
     })
 
     const codeMirror = useRef()
@@ -54,7 +56,13 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
 
     const editOnScroll = () => {}
 
-    const onChange = () => {}
+    const onChange = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const { form } = state
+        form.markdown = e.target.value
+        setState({
+            form: { ...form }
+        })
+    }
 
     const activedPreview = (e: React.MouseEvent<HTMLLIElement, MouseEvent>): void => {}
 
@@ -64,7 +72,13 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
         })
     }
 
-    const setInp = () => {}
+    const setInp = (e: string) => {
+        const { form } = state
+        form.title = e
+        setState({
+            form: { ...form }
+        })
+    }
 
     const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {}
 
@@ -72,14 +86,21 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
 
     const selectTag = (v: articleType.tagType) => {}
 
-    const submit = () => {}
+    const submit = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.stopPropagation()
+        try {
+            await VisitorFormVerify<venifyType>(form)
+        } catch (status) {
+            console.log(status)
+        }
+    }
 
     const { form, tagData, preview } = state
 
     useEffect(() => {}, [])
 
     return (
-        <div>
+        <div className="edit-article_box">
             <EditHeader
                 form={form}
                 tagData={tagData}

@@ -47,7 +47,7 @@ const IS_MOBILE =
 
 interface Iprops {
     value: number | string
-    onChange(val: string): void
+    onChange(val: React.MouseEvent<HTMLLIElement, MouseEvent>): void
     editOnScroll(e: any): void
     readOnly?: boolean
     defaultValue?: string
@@ -127,9 +127,9 @@ class CodeMirrorEditor extends React.Component<Iprops, any> {
     render() {
         const editor = React.createElement('textarea', {
             ref: this.editorRef,
-            value: this.props.value,
+            // value: this.props.value,
             readOnly: this.props.readOnly,
-            defaultValue: this.props.defaultValue,
+            defaultValue: this.props.value,
             onChange: this.props.onChange,
             className: this.props.textAreaClassName
         })

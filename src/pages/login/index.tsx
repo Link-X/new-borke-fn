@@ -31,7 +31,15 @@ const LoginPage: React.FC<any> = (props: Iprops): JSX.Element => {
     return (
         <div className="login-box" ref={boxRef}>
             <div className="login-form">
-                <Form name="login" className="form_box" onFinish={onFinish}>
+                <Form
+                    name="login"
+                    className="form_box"
+                    onFinish={onFinish}
+                    initialValues={{
+                        userName: 'test',
+                        password: 'test'
+                    }}
+                >
                     <div className="login_title">登陆 / 注册</div>
                     <Form.Item rules={[{ required: true, message: '请输入用户名!' }]} name="userName">
                         <Input
