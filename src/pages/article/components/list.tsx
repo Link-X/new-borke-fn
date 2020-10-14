@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Button } from 'antd'
-
 import { getArticleDate } from '@/utils/index'
 
 interface Iprops {
     articleList: articleType.articleItemType[]
     navList: articleType.tagType[]
+    filterTag: (id: number) => void
     goDetails(v: articleType.articleItemType): void
 }
 
@@ -17,6 +16,10 @@ const ArticleList = (props: Iprops): JSX.Element => {
         return props.navList.find((v) => v.id === id)?.tag
     }
 
+    const tagClick = (id: number) => {
+        props.filterTag(id)
+    }
+
     return (
         <ul>
             {articleList.map((v, i) => {
@@ -25,6 +28,7 @@ const ArticleList = (props: Iprops): JSX.Element => {
                         key={v.id}
                         style={{ display: v.show ? 'flex' : 'none' }}
                         className={`article-item ${v.hot ? 'article-item_hot' : ''}`}
+                        onClick={props.goDetails.bind(this, v)}
                     >
                         <div className="hd img-box">
                             <div className="img-back" style={{ backgroundImage: `url('${v.articleImg}')` }}>
@@ -36,16 +40,19 @@ const ArticleList = (props: Iprops): JSX.Element => {
                                 <h3 className="article-name">{v.title}</h3>
                             </div>
                             <div>
-                                <span>{tagName(v.tagId)}</span>
-                                <div>
-                                    <Button
-                                        onClick={props.goDetails.bind(this, v)}
-                                        type="primary"
-                                        className="white-btn"
+                                <span>
+                                    <span
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            e.stopPropagation()
+                                            tagClick(v.tagId)
+                                        }}
+                                        className="tag"
                                     >
-                                        查看
-                                    </Button>
-                                </div>
+                                        {tagName(v.tagId)}
+                                    </span>
+                                </span>
+                                <div className="author">作者: {v.userName}</div>
                             </div>
                         </div>
                     </li>

@@ -5,7 +5,7 @@ import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 interface Iprops {
-    filterTag(e: React.MouseEvent<HTMLUListElement, MouseEvent>): void
+    filterTag(id: string): void
     changeVal(e: string): void
     navList: articleType.tagType[]
     activedTag: string | number
@@ -15,10 +15,15 @@ const ArticleSide = (props: Iprops): JSX.Element => {
     const [val, setVal] = useState<string>('')
     const { navList, activedTag } = props
 
+    const filterTag = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        const tagId = event.target.getAttribute('tag-id')
+        props.filterTag(tagId)
+    }
+    console.log(activedTag)
     return (
         <ul>
             <li className="td">
-                <ul className="td-ul" onClick={props.filterTag}>
+                <ul className="td-ul" onClick={filterTag}>
                     <li>
                         <Input
                             value={val}
@@ -28,7 +33,7 @@ const ArticleSide = (props: Iprops): JSX.Element => {
                                 props.changeVal(e.target.value)
                             }}
                             type="text"
-                            placeholder="可输入标题搜索"
+                            placeholder="输入标题、作者搜索"
                         />
                     </li>
                     <li className={`${activedTag === 'all' && 'active'}`} tag-id="all">
@@ -40,11 +45,11 @@ const ArticleSide = (props: Iprops): JSX.Element => {
                 </ul>
             </li>
             <li className="bd">
-                <ul onClick={props.filterTag}>
+                <ul onClick={filterTag}>
                     {navList.map((v) => {
                         return (
                             <li
-                                className={`${activedTag === String(v.id) && 'active'}`}
+                                className={`${String(activedTag) === String(v.id) && 'active'}`}
                                 tag-id={v.id}
                                 key={v.id}
                             >
