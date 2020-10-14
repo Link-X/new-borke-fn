@@ -41,7 +41,7 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
         preview: true
     })
 
-    const codeMirror = useRef()
+    const codeMirror = useRef<any>()
     const uploadInput = useRef<HTMLInputElement>()
     const centerInput = useRef<HTMLInputElement>()
     const editArticle = useRef<HTMLDivElement>()
@@ -188,9 +188,8 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
                 >
                     <ReactMarkdown
                         className="markdown-body"
-                        id="markdownBody"
                         skipHtml={true}
-                        renderers={{ code: CodeStyle }}
+                        renderers={{ code: CodeStyle as any }}
                         source={form.markdown}
                     ></ReactMarkdown>
                     <EditTip

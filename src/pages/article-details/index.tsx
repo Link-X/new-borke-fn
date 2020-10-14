@@ -163,7 +163,7 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
                         className="markdown-body"
                         skipHtml={true}
                         renderers={{
-                            code: CodeStyle,
+                            code: CodeStyle as any,
                             heading: HeadingBlock
                         }}
                         source={details.markdown}
