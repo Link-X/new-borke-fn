@@ -48,11 +48,10 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const previewBox = useRef<HTMLDivElement>()
 
     const editOnScroll = (e: docType) => {
-        const scrollTop = e.doc.scrollTop
-        const valHeight = e.doc.height
+        const { scrollTop, height } = e.doc
         const boxHeight = editArticle.current.getBoundingClientRect().height
         const previewHeight = document.querySelector('.markdown-body').getBoundingClientRect().height
-        const scale = (valHeight - boxHeight) / (previewHeight - boxHeight)
+        const scale = (height - boxHeight) / (previewHeight - boxHeight)
         previewBox.current.scrollTo(0, scrollTop / scale)
     }
 
