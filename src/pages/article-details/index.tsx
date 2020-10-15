@@ -119,6 +119,10 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
         )
     }
 
+    const back = () =>{
+        props.history.goBack()
+    }
+
     useEffect(() => {
         init()
         const sc: any = scrollPage()
@@ -179,6 +183,9 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
                         </div>
                         <div className="left-tools_box" onClick={goPinLun}>
                             <i className="iconfont icon-pinglun left-tool_pinlun"></i>
+                        </div>
+                        <div className="left-tools_box" onClick={back}>
+                            <i className="iconfont icon-fanhui"></i>
                         </div>
                     </div>
                 </div>

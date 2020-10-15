@@ -36,7 +36,7 @@ const SereenSecond = () => {
                                 <li>
                                     本博前后端全部代均以github上传，傻瓜式安装机械式部署，你也想来一个吗？
                                 </li>
-                                <li>我正在搭建一个前端错误日j监控平台，有兴趣一加入吗？</li>
+                                <li>我正在搭建一个前端错误日监控平台，有兴趣一加入吗？</li>
                             </ul>
                         </TabPane>
                         <TabPane tab="" key="3" className="center-box_article">
