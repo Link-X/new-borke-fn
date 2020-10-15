@@ -11,9 +11,9 @@ import EditHeader from './components/edit-header'
 import { useSetState } from '@/hooks/index'
 import { markdownText } from './default'
 import { VisitorFormVerify } from './utils'
-import { compressionImg } from '@/utils'
+import { compressionImg, getUrlParam } from '@/utils'
 
-import { getTags, uploadImage } from '@/server'
+import { getTags, uploadImage, getArticleDetails, addArticle, editArticleDetials } from '@/server'
 
 import { propsRoute } from '@/typescript'
 
@@ -33,9 +33,10 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const [state, setState] = useSetState<articleType.stateType>({
         form: {
             markdown: markdownText,
-            tagId: '',
+            tagId: undefined,
             title: '',
-            articleImg: ''
+            articleImg: '',
+            id: ''
         },
         tagData: [],
         preview: true
@@ -113,37 +114,78 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     }
 
     const selectTag = (v: articleType.tagType) => {
-        console.log(v)
-        let { tagData } = state
+        let { tagData, form } = state
         tagData = tagData.map((item) => {
             item.checkouted = item.id === v.id
             return { ...item }
         })
+        form.tagId = v.id
         setState({
-            tagData
+            tagData,
+            form: { ...form }
         })
+    }
+
+    const overEnter = async () => {
+        const { form } = state
+        const httpPost = form.id ? editArticleDetials : addArticle
+        try {
+            await httpPost(form)
+            message.success('保存成功')
+            props.history.push('/article')
+        } catch (err) {
+            message.error('保存失败')
+        }
     }
 
     const submit = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.stopPropagation()
         try {
+            const { form } = state
             await VisitorFormVerify<articleType.venifyType>(form)
+            overEnter()
         } catch (status) {
             message.error(status.message)
         }
     }
 
-    const getNav = async () => {
-        const res = await getTags()
+    const getNav = async (id: number) => {
+        const res = await getTags(null)
         setState({
-            tagData: res
+            tagData: res.map((v) => {
+                v.checkouted = v.id === id
+                return v
+            })
         })
-        console.log(res)
+    }
+
+    const getDetails = async (id: string) => {
+        if (!id) {
+            getNav(null)
+            return
+        }
+        const res = await getArticleDetails(id)
+        await getNav(res.tagId)
+        setState({
+            form: {
+                markdown: res.markdown,
+                tagId: res.tagId,
+                title: res.title,
+                articleImg: res.articleImg,
+                id: +id
+            }
+        })
+    }
+
+    const init = () => {
+        const { id } = getUrlParam<{ id: string }>()
+        getDetails(id)
     }
 
     const clickFile = () => {
         uploadInput.current.click()
     }
+
     const clickFile2 = () => {
         centerInput.current.click()
     }
@@ -151,7 +193,7 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
     const { form, tagData, preview } = state
 
     useEffect(() => {
-        getNav()
+        init()
     }, [])
 
     return (

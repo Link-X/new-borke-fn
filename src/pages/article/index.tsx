@@ -18,7 +18,7 @@ const Article: React.FC<propsRoute> = (props: propsRoute): JSX.Element => {
     const [filterVal, steFilterVal] = useState<string>('')
 
     const getTagsFunc = async (): Promise<any> => {
-        const res = await getTags()
+        const res = await getTags(null)
         setNavList(res || [])
     }
 

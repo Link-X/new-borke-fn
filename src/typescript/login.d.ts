@@ -36,21 +36,14 @@ declare namespace loginType {
         district: string
     }
 
-    /** 登接口 */
-    export interface loginFuncType {
-        (params: formDataType): Promise<loginEnterDataType>
-    }
-
-    /** 获取定接口j */
-
-    export interface getCityType {
-        (): Promise<addressDetailsType>
-    }
-
     /** 定位信息 */
     export interface addressType {
         content: {
             address_detail: addressDetailsType
         }
+    }
+
+    export interface httpFunc<T, U> {
+        (params: T): Promise<U>
     }
 }

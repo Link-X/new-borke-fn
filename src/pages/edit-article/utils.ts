@@ -3,6 +3,7 @@ import Verify from '@/utils/verify'
 const verifyFunc = new Verify({}, {})
 export const VisitorFormVerify = <T>(formData: articleType.formType): Promise<T> => {
     return new Promise((resolve, reject) => {
+        console.log(formData)
         verifyFunc.$init(formData, {
             title: [
                 {
@@ -26,6 +27,7 @@ export const VisitorFormVerify = <T>(formData: articleType.formType): Promise<T>
                 {
                     message: '请选择文章标签',
                     validator: (val: number, cb: Function) => {
+                        console.log(val)
                         if (!val && val !== 0) {
                             cb(new Error('请选择文章标签'))
                         } else {

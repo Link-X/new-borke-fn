@@ -63,7 +63,7 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
                 await delArticleRequest({ id: details.id })
                 message.success('删除成功')
                 setTimeout(() => {
-                    window.location.href = '/'
+                    props.history.replace('/article')
                 }, 500)
             }, '再次确定?')
         }, '确定要删除？')

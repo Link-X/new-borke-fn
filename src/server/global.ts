@@ -1,7 +1,7 @@
 import { post, get } from '@/utils/http'
 
 /** 获取定位信息 */
-export const getCity: loginType.getCityType = () => {
+export const getCity: loginType.httpFunc<null, loginType.addressDetailsType> = () => {
     return new Promise((resolve, reject) => {
         let address_detail: loginType.addressDetailsType = {} as loginType.addressDetailsType
         window.showLocation = (data: loginType.addressType) => {

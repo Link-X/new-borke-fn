@@ -3,12 +3,7 @@ import React from 'react'
 import { Popover, Button } from 'antd'
 
 interface Iprops {
-    form: {
-        markdown: string
-        tagId: string
-        title: string
-        articleImg: string
-    }
+    form: articleType.formType
     tagData: articleType.tagType[]
     setInp(e: string): void
     uploadImg(e: React.ChangeEvent<HTMLInputElement>): void
@@ -47,7 +42,7 @@ const EditHeader = (props: Iprops): JSX.Element => {
                             placement="bottom"
                             title="上传封面"
                             content={
-                                <div className="content">
+                                <div className="upload-content">
                                     {!form.articleImg ? (
                                         <p onClick={props.clickFile}>点击添加封面</p>
                                     ) : (

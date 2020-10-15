@@ -4,10 +4,6 @@ declare namespace articleType {
         tag: string
         checkouted: boolean
     }
-    /** 获取标签 */
-    export interface getTagsFunc {
-        (): Promise<tagType[]>
-    }
 
     export interface articleItemType {
         articleImg: string
@@ -32,19 +28,9 @@ declare namespace articleType {
         pageSize: number
     }
 
-    /** 获取文章列表 */
-    export interface getArticleListType {
-        (params: getArtilceParams): Promise<articleListDataType>
-    }
-
     export interface majorItemType {
         major: articleItemType[]
         major2: articleItemType[]
-    }
-
-    /** 获取热门文章 */
-    export interface getMajorType {
-        (): Promise<majorItemType>
     }
 
     export interface pinglunDataType {
@@ -82,19 +68,9 @@ declare namespace articleType {
         userName: string
     }
 
-    /** get article details */
-    export interface getArtcileDetails {
-        (id: string): Promise<articleDetails>
-    }
-
     export interface addCommentArticleParamsType {
         text: string
         articleId: string
-    }
-
-    /** 评论 */
-    export interface addCommentArticleFunc {
-        (params: addCommentArticleParamsType): Promise<pinglunDataType>
     }
 
     export interface loveNumType {
@@ -103,39 +79,30 @@ declare namespace articleType {
         status: string
     }
 
-    /** 点赞 */
-    export interface loveArticleFunc {
-        (params: { id: number }): Promise<loveNumType>
-    }
-
-    /** 删除文章 */
-    export interface delArticleFunc {
-        (params: { id: number }): Promise<any>
-    }
-
-    interface stateType {
+    export interface stateType {
         form: formType
         tagData: articleType.tagType[]
         preview: boolean
     }
-    interface formType {
+    export interface formType {
         markdown: string
-        tagId: string
+        tagId: number 
         title: string
         articleImg: string
+        id: number 
     }
 
-    interface venifyType {
+    export interface venifyType {
         result: boolean
         message: string
     }
 
-    interface uploadType {
+    export interface uploadType {
         file: string
     }
 
-    /** 上传图片 */
-    interface uploadImageFunct {
-        (params: uploadType): Promise<{ path: string }>
+    interface httpFunc<T, U> {
+        (params: T): Promise<U>
     }
+
 }

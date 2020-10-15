@@ -112,4 +112,15 @@ export const post: postHttpType = async (
     return Http.post(path, data, options)
 }
 
+export const put: postHttpType = async (
+    path: string,
+    data: any,
+    options: any = {
+        params: {}
+    }
+) => {
+    data = addData({ ...data })
+    return Http.put(path, data, options)
+}
+
 export default Http
