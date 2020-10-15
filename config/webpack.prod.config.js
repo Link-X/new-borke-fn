@@ -83,8 +83,7 @@ module.exports = webpackConfig({
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[contenthash].css'
+            filename: '[name]-[contenthash].css'
         }),
         new ChunkRenamePlugin({
             // runtimeChunk有值之后，entry的filename不会变成chunkFilename
