@@ -42,7 +42,7 @@ if (argv.analyzer) {
     )
 }
 
-const styleLoader = isProd ? MiniCssExtractPlugin.loader : 'style-loader'
+const styleLoader = isProd ? { loader: MiniCssExtractPlugin.loader } : 'style-loader'
 
 const smpWrap = argv.analyzer ? smp.wrap : (config) => config
 
@@ -89,7 +89,17 @@ module.exports = (webpackOptions) =>
                     test: /\.css$/,
                     include: [resolve('src')],
                     exclude: /(node_module|\.module.css$)/,
-                    use: [cacheLoader, styleLoader, 'css-loader', 'postcss-loader']
+                    use: [
+                        cacheLoader,
+                        styleLoader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
+                        'postcss-loader'
+                    ]
                 },
                 {
                     test: /\.module\.css$/,
@@ -101,6 +111,7 @@ module.exports = (webpackOptions) =>
                         {
                             loader: 'css-loader',
                             options: {
+                                sourceMap: true,
                                 modules: true,
                                 importLoaders: 1
                             }
@@ -116,7 +127,12 @@ module.exports = (webpackOptions) =>
                         cacheLoader,
                         // Loaders are evaluated/executed from right to left (or from bottom to top)
                         styleLoader,
-                        'css-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
                         'postcss-loader',
                         {
                             loader: 'less-loader',
@@ -132,7 +148,15 @@ module.exports = (webpackOptions) =>
                 {
                     test: /.css$/,
                     include: /node_module/,
-                    use: [styleLoader, 'css-loader']
+                    use: [
+                        styleLoader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        }
+                    ]
                 },
                 {
                     test: /\.(eot|otf|ttf|woff|woff2)$/,
