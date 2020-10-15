@@ -36,7 +36,7 @@ const EditArticle: React.FC<Iprops> = (props: Iprops): JSX.Element => {
             tagId: undefined,
             title: '',
             articleImg: '',
-            id: ''
+            id: undefined 
         },
         tagData: [],
         preview: true

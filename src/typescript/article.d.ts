@@ -86,10 +86,10 @@ declare namespace articleType {
     }
     export interface formType {
         markdown: string
-        tagId: number 
+        tagId: number
         title: string
         articleImg: string
-        id: number 
+        id: number
     }
 
     export interface venifyType {
@@ -104,5 +104,4 @@ declare namespace articleType {
     interface httpFunc<T, U> {
         (params: T): Promise<U>
     }
-
 }
