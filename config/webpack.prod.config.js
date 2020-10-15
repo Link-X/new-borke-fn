@@ -30,7 +30,7 @@ module.exports = webpackConfig({
             new TerserPlugin({
                 // 6984ms 1508ms 1502ms
                 cache: true,
-                sourceMap: true, // Must be set to true if using source-maps in production
+                sourceMap: false, // Must be set to true if using source-maps in production
                 parallel: true,
                 extractComments: false
             })

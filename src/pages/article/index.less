@@ -92,17 +92,17 @@
 .content .right ul {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .content .right ul li {
     width: 360px;
     height: 360px;
+    flex: auto;
+    margin: 0 40px;
     margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
-
     box-sizing: content-box;
     // overflow: hidden;
     // border: solid 1px #e5e5e5;
@@ -193,67 +193,38 @@
 
 .article-item_hot {
     border-radius: 3px;
-    &:before,
-    &:after {
-        display: none;
+    transition: all 0.6s ease-in;
+    position: relative;
+    &:before {
         content: '';
         position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
+        top: -2px;
         right: 0;
-        border: 2px solid red;
-        border-radius: 3px;
-        overflow: hidden;
-        border-image: linear-gradient(to right, #000718, #23b7cb) 1 10;
-        margin: -5px;
-        z-index: -1;
+        height: 2.5px;
+        width: 0;
+        background: #028da9;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        height: 2.5px;
+        width: 0;
+        background: #028da9;
+        transition: 400ms ease all;
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
     }
     &:hover {
         &:before,
         &:after {
-            display: block;
-        }
-        &:before {
-            animation: lineA 8s linear infinite;
-        }
-        &:after {
-            animation: lineB 8s linear infinite;
+            width: 100%;
+            transition: 800ms ease all;
         }
     }
 }
 
-@keyframes lineA {
-    0%,
-    100% {
-        clip: rect(0, 370px, 2px, 0);
-    }
-    25% {
-        clip: rect(0, 2px, 370px, 0);
-    }
-    50% {
-        clip: rect(360px, 370px, 370px, 0);
-    }
-    75% {
-        clip: rect(0, 370px, 370px, 360px);
-    }
-}
-
-@keyframes lineB {
-    0%,
-    100% {
-        clip: rect(360px, 370px, 370px, 0);
-    }
-    25% {
-        clip: rect(0, 370px, 370px, 360px);
-    }
-    50% {
-        clip: rect(0, 370px, 2px, 0);
-    }
-    75% {
-        clip: rect(0, 2px, 370px, 0);
-    }
-}
 .img-box {
     .img-back {
         width: 100%;
