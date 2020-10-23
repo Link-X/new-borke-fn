@@ -119,7 +119,7 @@ const ArticleDetails: React.FC<Iprops> = (props: Iprops): JSX.Element => {
         )
     }
 
-    const back = () =>{
+    const back = () => {
         props.history.goBack()
     }
 

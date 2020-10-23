@@ -12,6 +12,9 @@ import '@/global/global.less'
 import 'iu-toast/dist/iu-toast.min.css'
 import configureStore from './configureStore'
 
+import webrecord from 'web-front-end-record'
+console.log(webrecord)
+
 const store = configureStore()
 const MOUNT_NODE = document.getElementById('app')
 
