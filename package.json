@@ -132,6 +132,6 @@
     "react-router-dom": "^5.2.0",
     "redux-actions": "^2.6.5",
     "redux-promise": "^0.6.0",
-    "web-front-end-record": "0.0.3"
+    "web-front-end-record": "^0.1.1"
   }
 }

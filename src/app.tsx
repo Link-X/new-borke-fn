@@ -11,9 +11,19 @@ import '@/global/reset.less'
 import '@/global/global.less'
 import 'iu-toast/dist/iu-toast.min.css'
 import configureStore from './configureStore'
+import record from 'web-front-end-record'
 
-import webrecord from 'web-front-end-record'
-console.log(webrecord)
+record({
+    key: 'key',
+    version: '0.0.1',
+    outtime: 300,
+    recording: true,
+    sendEvent(type: string, data: any) {
+        if (type !== 'vdomSend') {
+            console.log(data)
+        }
+    }
+})
 
 const store = configureStore()
 const MOUNT_NODE = document.getElementById('app')
